@@ -1,9 +1,11 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { HeartFill } from 'react-bootstrap-icons'; // Ensure you have react-bootstrap-icons installed
+import { HeartFill } from 'react-bootstrap-icons';
+import { Link } from 'react-router-dom';
 import NavigationBar from '../components/Navbar';
 import Footer from '../components/Footer';
-
+import { Button } from 'react-bootstrap';
+import { FaArrowRight } from 'react-icons/fa';
 
 const ThankYou = () => {
   return (
@@ -17,6 +19,18 @@ const ThankYou = () => {
         <p style={{ color: '#000', fontSize: '1.5rem' }}>
           Your blood donation can save lives.
         </p>
+        <div className="mt-4 d-flex align-items-center" style={{ fontSize: "1.2rem" }}>
+          <Button
+            as={Link}
+            to="/requests-list"
+            variant="light"
+            className="d-flex align-items-center"
+            style={{ color: "#333", textDecoration: "none", borderRadius: "60px", backgroundColor: "#f7f7f7" }}
+          >
+            <FaArrowRight style={{ color: "#ff2c2c" }} className="me-2" />
+            View Blood Requests List
+          </Button>
+        </div>
       </div>
       <Footer />
     </>

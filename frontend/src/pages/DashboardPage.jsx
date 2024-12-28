@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Card, Button, ListGroup } from "react-bootstrap";
 import NavigationBar from "../components/NavBar";
+import Filter from "../components/Filter";
 import Footer from "../components/Footer";
 import { useNavigate } from "react-router-dom";
 
@@ -27,6 +28,7 @@ const Dashboard = () => {
       <div>
         <NavigationBar isLoggedIn={isLoggedIn} onLogout={handleLogout} />
       </div>
+      <Filter />
 
       <div>
         <Container className="flex-grow-1 py-4 mt-5">

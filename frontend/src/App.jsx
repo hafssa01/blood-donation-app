@@ -22,7 +22,6 @@ const App = () => {
           <Route path="/google-login" element={<GoogleOAuthLogin />} />
           <Route path="/register" element={<Register />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/filter" element={<Filter />} />
         </Routes>
       </div>
     </Router>

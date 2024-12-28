@@ -40,7 +40,8 @@ const Filter = () => {
 
   return (
     <Container className="my-4">
-      <h2 className="mb-4">Filter Users</h2>
+      {/* <h2 className="mb-4 text-center">Filter Users</h2> */}
+      <Container className="d-flex justify-content-center align-items-center">
       <Row className="align-items-end g-3">
         <Col md={3}>
           <Form.Group controlId="formBloodType">
@@ -91,12 +92,12 @@ const Filter = () => {
           </Button>
         </Col>
       </Row>
-
+      </Container>
       {error && <Alert variant="danger" className="mt-4">{error}</Alert>}
 
-      <h3 className="mt-4">Results:</h3>
+      {/* <h3 className="mt-4 text-center">Results:</h3> */}
       {results.length > 0 ? (
-        <ListGroup className="mt-2">
+        <ListGroup className="mt-4 d-flex justify-content-center align-items-center">
           {results.map((user, index) => (
             <ListGroup.Item key={index}>
               <strong>Email:</strong> {user.email}<br />
@@ -108,7 +109,7 @@ const Filter = () => {
           ))}
         </ListGroup>
       ) : (
-        <p className="mt-2">No results found.</p>
+        <p className="mt-2 text-center">No results found.</p>
       )}
     </Container>
   );

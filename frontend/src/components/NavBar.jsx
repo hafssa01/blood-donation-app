@@ -42,7 +42,7 @@ const NavigationBar = ({ isLoggedIn, onLogout }) => {
         {/* Navbar Links */}
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav mx-auto"> {/* Centers the Home link */}
-            <li className="nav-item">
+            <li className="nav-item mx-3">
               <a
                 className="nav-link"
                 href="/"
@@ -52,7 +52,39 @@ const NavigationBar = ({ isLoggedIn, onLogout }) => {
               >
                 Home
               </a>
-
+            </li>
+            <li className="nav-item mx-3">
+              <a
+                className="nav-link"
+                href="/"
+                style={linkStyle}
+                onMouseEnter={(e) => e.target.style.color = linkHoverStyle.color}
+                onMouseLeave={(e) => e.target.style.color = linkStyle.color}
+              >
+                About Us
+              </a>
+            </li>
+            <li className="nav-item mx-3">
+              <a
+                className="nav-link"
+                href="/"
+                style={linkStyle}
+                onMouseEnter={(e) => e.target.style.color = linkHoverStyle.color}
+                onMouseLeave={(e) => e.target.style.color = linkStyle.color}
+              >
+                Cantact Us
+              </a>
+            </li>
+            <li className="nav-item mx-3">
+              <a
+                className="nav-link"
+                href="/"
+                style={linkStyle}
+                onMouseEnter={(e) => e.target.style.color = linkHoverStyle.color}
+                onMouseLeave={(e) => e.target.style.color = linkStyle.color}
+              >
+                FAQs
+              </a>
             </li>
           </ul>
 

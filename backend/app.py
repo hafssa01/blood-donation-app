@@ -20,7 +20,7 @@ db = client["blood_donation_db"]
 def home():
     return "Welcome to the Blood Donation App!"
 
-
+# googleOath endpoint
 @app.route('/google-login', methods=['POST'])
 def google_login():
     token = request.json.get('token')

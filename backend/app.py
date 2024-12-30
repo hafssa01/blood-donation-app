@@ -54,7 +54,6 @@ def register():
     db.users.insert_one({
         "email": data['email'],
         "password": hashed_pw,
-        "user_type": data['user_type'],  # 'donor' or 'recipient'
         "firstName": data.get('firstName', ""),
         "lastName": data.get('lastName', ""),
         "birthDate": data.get('birthDate', ""),
@@ -72,7 +71,7 @@ def login():
     user = db.users.find_one({"email": data['email']})
     if not user or not bcrypt.checkpw(data['password'].encode('utf-8'), user['password']):
         return jsonify({"error": "Invalid credentials"}), 400
-    return jsonify({"message": "Login successful!", "user_type": user['user_type']})
+    return jsonify({"message": "Login successful!"})
 
 # Logout endpoint
 @app.route('/logout', methods=['GET'])

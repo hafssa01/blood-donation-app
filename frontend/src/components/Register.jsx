@@ -17,7 +17,6 @@ const RegisterForm = () => {
     email: "",
     password: "",
     confirmPassword: "",
-    userType: "donor",
   });
 
   const [errors, setErrors] = useState({});
@@ -191,18 +190,6 @@ const RegisterForm = () => {
                 isInvalid={touched.confirmPassword && !!errors.confirmPassword}
               />
               <Form.Text className="text-danger">{errors.confirmPassword}</Form.Text>
-            </Form.Group>
-            <Form.Group className="mb-3">
-              <Form.Label>User Type</Form.Label>
-              <Form.Control
-                as="select"
-                name="userType"
-                value={formData.userType}
-                onChange={handleChange}
-              >
-                <option value="donor">Donor</option>
-                <option value="recipient">Recipient</option>
-              </Form.Control>
             </Form.Group>
             <Button className="mt-4 w-100" variant="danger" type="submit">
               Register

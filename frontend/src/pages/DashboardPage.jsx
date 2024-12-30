@@ -1,21 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Card, Button, ListGroup } from "react-bootstrap";
 import NavigationBar from "../components/NavBar";
-import Filter from "../components/Filter";
 import Footer from "../components/Footer";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [activeTab, setActiveTab] = useState("donations");
-  const [donations] = useState([
-
-  ]);
-
-  const [requests] = useState([
-    
-  ]);
-
+  const [donations, setDonations] = useState([]);
+  const [requests, setRequests] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -23,12 +20,49 @@ const Dashboard = () => {
     navigate("/login");
   };
 
+  const fetchDonations = async () => {
+    setLoading(true);
+    setError("");
+    try {
+      const response = await axios.get("http://localhost:5000/list", {
+        params: { user_type: "donor" },
+      });
+      setDonations(response.data);
+    } catch (err) {
+      setError("Error fetching donations");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchRequests = async () => {
+    setLoading(true);
+    setError("");
+    try {
+      const response = await axios.get("http://localhost:5000/list", {
+        params: { user_type: "recipient" },
+      });
+      setRequests(response.data);
+    } catch (err) {
+      setError("Error fetching requests");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (activeTab === "donations") {
+      fetchDonations();
+    } else if (activeTab === "requests") {
+      fetchRequests();
+    }
+  }, [activeTab]);
+
   return (
     <div className="d-flex flex-column min-vh-100">
       <div>
         <NavigationBar isLoggedIn={isLoggedIn} onLogout={handleLogout} />
       </div>
-      <Filter />
 
       <div>
         <Container className="flex-grow-1 py-4 mt-2">
@@ -43,7 +77,7 @@ const Dashboard = () => {
                     variant="primary"
                     style={{
                       borderRadius: "80px",
-                      backgroundColor: "#2c2f33",  // Light black like ChatGPT's chat zone
+                      backgroundColor: "#2c2f33",
                       color: "white",
                       border: "none",
                     }}
@@ -62,7 +96,10 @@ const Dashboard = () => {
                   <Card.Title>Blood Donations</Card.Title>
                   <Button
                     variant="outline-danger"
-                    onClick={() => setActiveTab("donations")}
+                    onClick={() => {
+                      setActiveTab("donations");
+                      fetchDonations(); // Fetch donations when clicked
+                    }}
                     className="w-100 mb-3"
                     style={{
                       borderRadius: "80px",
@@ -73,14 +110,15 @@ const Dashboard = () => {
                   >
                     View Blood Donations
                   </Button>
+                  {loading && <p>Loading donations...</p>}
+                  {error && <p className="text-danger">{error}</p>}
                   {activeTab === "donations" && (
                     <ListGroup>
                       {donations.map((donation) => (
                         <ListGroup.Item key={donation.id}>
-                          <strong>Donor:</strong> {donation.donor} | <strong>Amount:</strong>{" "}
-                          {donation.amount} | <strong>Date:</strong> {donation.date}
+                          <strong>Donor:</strong> {donation.fullName} <br/> <strong>Blood Group:</strong> {donation.bloodGroup} <br/><strong>Location:</strong> {donation.location} <br/><strong>Phone Number:</strong> {donation.phoneNumber}
                         </ListGroup.Item>
-                      ))}
+                                           ))}
                     </ListGroup>
                   )}
                 </Card.Body>
@@ -93,7 +131,10 @@ const Dashboard = () => {
                   <Card.Title>Blood Requests</Card.Title>
                   <Button
                     variant="danger"
-                    onClick={() => setActiveTab("requests")}
+                    onClick={() => {
+                      setActiveTab("requests");
+                      fetchRequests(); // Fetch requests when clicked
+                    }}
                     className="w-100 mb-3"
                     style={{
                       borderRadius: "80px",
@@ -103,12 +144,13 @@ const Dashboard = () => {
                   >
                     View Blood Requests
                   </Button>
+                  {loading && <p>Loading requests...</p>}
+                  {error && <p className="text-danger">{error}</p>}
                   {activeTab === "requests" && (
                     <ListGroup>
                       {requests.map((request) => (
                         <ListGroup.Item key={request.id}>
-                          <strong>Requester:</strong> {request.requester} | <strong>Amount:</strong>{" "}
-                          {request.amount} | <strong>Date:</strong> {request.date}
+                          <strong>Requester:</strong> {request.fullName} <br/> <strong>Blood Group:</strong> {request.bloodGroup} <br/><strong>Reason:</strong> {request.reason} <br/><strong>Location:</strong> {request.location} <br/><strong>Phone Number:</strong> {request.phoneNumber}
                         </ListGroup.Item>
                       ))}
                     </ListGroup>

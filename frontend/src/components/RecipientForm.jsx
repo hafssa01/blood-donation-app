@@ -16,6 +16,8 @@ const RequestBloodForm = () => {
     hospital: "",
     reason: "",
     confirmEmergency: false,
+    phoneNumber: "",
+    user_type: "recipient",
   });
 
   const [errors, setErrors] = useState({});
@@ -55,6 +57,12 @@ const RequestBloodForm = () => {
 
   const validate = (data) => {
     const newErrors = {};
+    const phoneRegex = /^[0-9]{10}$/; // Example regex for a 10-digit phone number
+    if (!data.phoneNumber) {
+      newErrors.phoneNumber = "Phone number is required.";
+    } else if (!phoneRegex.test(data.phoneNumber)) {
+      newErrors.phoneNumber = "Phone number must be 10 digits.";
+    }
     if (!data.fullName) newErrors.fullName = "Full name is required.";
     if (!data.age) newErrors.age = "Age is required.";
     if (!data.sex) newErrors.sex = "Please select your sex.";
@@ -153,6 +161,21 @@ const RequestBloodForm = () => {
               />
               <Form.Text className="text-danger">{errors.location}</Form.Text>
             </Form.Group>
+            <Row>
+              <Col xs={12}>
+                <Form.Group className="mb-3">
+                  <Form.Label>Phone Number</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="phoneNumber"
+                    value={formData.phoneNumber}
+                    onChange={handleChange}
+                    isInvalid={!!errors.phoneNumber}
+                  />
+                  <Form.Text className="text-danger">{errors.phoneNumber}</Form.Text>
+                </Form.Group>
+              </Col>
+            </Row>
             <Form.Group className="mb-3">
               <Form.Label>Hospital</Form.Label>
               <Form.Control

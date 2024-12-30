@@ -6,7 +6,7 @@ import Register from './components/Register';
 import DonateBloodForm from './components/DonorForm';
 import RequestBloodForm from './components/RecipientForm';
 import RequestSent from './pages/RequestSent';
-import ThankYou from './pages/Thanks';
+import ThankYou from './pages/ThanksPage';
 import Dashboard from './pages/DashboardPage';
 import GoogleOAuthLogin from './components/GoogleOAuthLogin';
 import 'bootstrap/dist/css/bootstrap.min.css';

@@ -129,7 +129,7 @@ const NavigationBar = ({ isLoggedIn, onLogout }) => {
               </li>
               <li className="nav-item">
                 <button
-                  className="nav-link btn btn-link d-flex align-items-center gap-2"
+                  className="nav-link btn btn-link d-flex align-items-center gap-2 "
                   style={linkStyle}
                   onClick={onLogout}
                 >

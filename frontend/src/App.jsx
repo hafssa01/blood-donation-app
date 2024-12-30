@@ -5,7 +5,7 @@ import LoginForm from './pages/LoginPage';
 import Register from './components/Register';
 import DonateBloodForm from './components/DonorForm';
 import RequestBloodForm from './components/RecipientForm';
-import RequestSent from './pages/RequestSubmited';
+import RequestSent from './pages/RequestSent';
 import ThankYou from './pages/Thanks';
 import Dashboard from './pages/DashboardPage';
 import GoogleOAuthLogin from './components/GoogleOAuthLogin';

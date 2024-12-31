@@ -7,12 +7,11 @@ import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
-  const [activeTab, setActiveTab] = useState("donations");
-  const [donations, setDonations] = useState([]);
-  const [requests, setRequests] = useState([]);
+  const [donor, setDonor] = useState(null); // Single donor
+  const [recipient, setRecipient] = useState(null); // Single recipient
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  
+
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -20,43 +19,40 @@ const Dashboard = () => {
     navigate("/login");
   };
 
-  const fetchDonations = async () => {
+  const fetchDonor = async () => {
     setLoading(true);
     setError("");
     try {
       const response = await axios.get("http://localhost:5000/list", {
         params: { user_type: "donor" },
       });
-      setDonations(response.data);
+      setDonor(response.data[0]); // Fetch one donor
     } catch (err) {
-      setError("Error fetching donations");
+      setError("Error fetching donor");
     } finally {
       setLoading(false);
     }
   };
 
-  const fetchRequests = async () => {
+  const fetchRecipient = async () => {
     setLoading(true);
     setError("");
     try {
       const response = await axios.get("http://localhost:5000/list", {
         params: { user_type: "recipient" },
       });
-      setRequests(response.data);
+      setRecipient(response.data[0]); // Fetch one recipient
     } catch (err) {
-      setError("Error fetching requests");
+      setError("Error fetching recipient");
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    if (activeTab === "donations") {
-      fetchDonations();
-    } else if (activeTab === "requests") {
-      fetchRequests();
-    }
-  }, [activeTab]);
+    fetchDonor();
+    fetchRecipient();
+  }, []);
 
   return (
     <div className="d-flex flex-column min-vh-100">
@@ -64,107 +60,100 @@ const Dashboard = () => {
         <NavigationBar isLoggedIn={isLoggedIn} onLogout={handleLogout} />
       </div>
 
-      <div>
-        <Container className="flex-grow-1 py-4 mt-2">
-          <Row className="justify-content-center mb-4">
-            <Col md={6}>
-              <Card className="text-center border-0">
-                <Card.Body>
-                  <Card.Title>Welcome to Your Dashboard</Card.Title>
-                  <Card.Text>Manage your blood donations and requests here.</Card.Text>
-                  <Button
-                    href="/profile"
-                    variant="primary"
-                    style={{
-                      borderRadius: "80px",
-                      backgroundColor: "#2c2f33",
-                      color: "white",
-                      border: "none",
-                    }}
-                  >
-                    Go to Profile
-                  </Button>
-                </Card.Body>
-              </Card>
-            </Col>
-          </Row>
+      <Container className="flex-grow-1 py-4 mt-2">
+        <Row className="justify-content-center mb-4">
+          <Col md={6}>
+            <Card className="text-center border-0">
+              <Card.Body>
+                <Card.Title className="display-6 fw-normal">Welcome to Your Dashboard</Card.Title>
+                <Card.Text className="fs-6">Manage your blood donations and requests here.</Card.Text>
+                <Button
+                  href="/profile"
+                  variant="primary"
+                  style={{
+                    borderRadius: "80px",
+                    backgroundColor: "#2c2f33",
+                    color: "white",
+                    border: "none",
+                  }}
+                >
+                  Go to Profile
+                </Button>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
 
-          <Row className="justify-content-center mt-4">
-            <Col md={4} className="mb-3">
-              <Card>
-                <Card.Body>
-                  <Card.Title>Blood Donations</Card.Title>
-                  <Button
-                    variant="outline-danger"
-                    onClick={() => {
-                      setActiveTab("donations");
-                      fetchDonations(); // Fetch donations when clicked
-                    }}
-                    className="w-100 mb-3"
-                    style={{
-                      borderRadius: "80px",
-                      border: "1px solid #ff2c2c",
-                      color: "#ff2c2c",
-                      backgroundColor: "white",
-                    }}
-                  >
-                    View Blood Donations
-                  </Button>
-                  {loading && <p>Loading donations...</p>}
-                  {error && <p className="text-danger">{error}</p>}
-                  {activeTab === "donations" && (
-                    <ListGroup>
-                      {donations.map((donation) => (
-                        <ListGroup.Item key={donation.id}>
-                          <strong>Donor:</strong> {donation.fullName} <br/> <strong>Blood Group:</strong> {donation.bloodGroup} <br/><strong>Location:</strong> {donation.location} <br/><strong>Phone Number:</strong> {donation.phoneNumber}
-                        </ListGroup.Item>
-                                           ))}
-                    </ListGroup>
-                  )}
-                </Card.Body>
-              </Card>
-            </Col>
+        <Row className="justify-content-center mt-4">
+          <Col md={4} className="mb-3">
+            <Card>
+              <Card.Body>
+                <Card.Title>Blood Donations</Card.Title>
+                {loading && <p>Loading...</p>}
+                {error && <p className="text-danger">{error}</p>}
+                {donor && (
+                  <ListGroup>
+                    <ListGroup.Item key={donor.id}>
+                      <strong>Donor:</strong> {donor.fullName} <br />
+                      <strong>Blood Group:</strong> {donor.bloodGroup} <br />
+                      <strong>Location:</strong> {donor.location} <br />
+                      <strong>Phone Number:</strong> {donor.phoneNumber}
+                    </ListGroup.Item>
+                  </ListGroup>
+                )}
+                <Button
+                  variant="outline-danger"
+                  onClick={() => navigate("/donors")}
+                  className="w-100 mt-3"
+                  style={{
+                    borderRadius: "80px",
+                    border: "1px solid #ff2c2c",
+                    color: "#ff2c2c",
+                    backgroundColor: "white",
+                  }}
+                >
+                  Read More
+                </Button>
+              </Card.Body>
+            </Card>
+          </Col>
 
-            <Col md={4} className="mb-3">
-              <Card>
-                <Card.Body>
-                  <Card.Title>Blood Requests</Card.Title>
-                  <Button
-                    variant="danger"
-                    onClick={() => {
-                      setActiveTab("requests");
-                      fetchRequests(); // Fetch requests when clicked
-                    }}
-                    className="w-100 mb-3"
-                    style={{
-                      borderRadius: "80px",
-                      backgroundColor: "#ff2c2c",
-                      color: "white",
-                    }}
-                  >
-                    View Blood Requests
-                  </Button>
-                  {loading && <p>Loading requests...</p>}
-                  {error && <p className="text-danger">{error}</p>}
-                  {activeTab === "requests" && (
-                    <ListGroup>
-                      {requests.map((request) => (
-                        <ListGroup.Item key={request.id}>
-                          <strong>Requester:</strong> {request.fullName} <br/> <strong>Blood Group:</strong> {request.bloodGroup} <br/><strong>Reason:</strong> {request.reason} <br/><strong>Location:</strong> {request.location} <br/><strong>Phone Number:</strong> {request.phoneNumber}
-                        </ListGroup.Item>
-                      ))}
-                    </ListGroup>
-                  )}
-                </Card.Body>
-              </Card>
-            </Col>
-          </Row>
-        </Container>
-      </div>
+          <Col md={4} className="mb-3">
+            <Card>
+              <Card.Body>
+                <Card.Title>Blood Requests</Card.Title>
+                {loading && <p>Loading...</p>}
+                {error && <p className="text-danger">{error}</p>}
+                {recipient && (
+                  <ListGroup>
+                    <ListGroup.Item key={recipient.id}>
+                      <strong>Requester:</strong> {recipient.fullName} <br />
+                      <strong>Blood Group:</strong> {recipient.bloodGroup} <br />
+                      {/* <strong>Reason:</strong> {recipient.reason} <br /> */}
+                      <strong>Location:</strong> {recipient.location} <br />
+                      <strong>Phone Number:</strong> {recipient.phoneNumber}
+                    </ListGroup.Item>
+                  </ListGroup>
+                )}
+                <Button
+                  variant="outline-danger"
+                  onClick={() => navigate("/requesters")}
+                  className="w-100 mt-3"
+                  style={{
+                    borderRadius: "80px",
+                    color: "white",
+                    backgroundColor: "#ff2c2c",
+                  }}
+                >
+                  Read More
+                </Button>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+      </Container>
 
-      <div>
-        <Footer />
-      </div>
+      <Footer />
     </div>
   );
 };

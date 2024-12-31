@@ -91,10 +91,15 @@ def submit_form():
 @app.route('/list', methods=['GET'])
 def get_list():
     user_type = request.args.get('user_type')  # 'donor' or 'recipient'
-    blood_type = request.args.get('blood_type')
+    bloodGroup = request.args.get('bloodGroup')  # Updated key for blood group
+    location = request.args.get('location')  # Location filter
     query = {"user_type": user_type}
-    if blood_type:
-        query["blood_type"] = blood_type
+
+    if bloodGroup:
+        query["bloodGroup"] = bloodGroup  # Use updated key for blood group
+    if location:
+        query["location"] = location  # Add location to query filter
+
     records = list(db.forms.find(query, {"_id": 0}))
     return jsonify(records)
 

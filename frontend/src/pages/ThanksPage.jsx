@@ -22,7 +22,7 @@ const ThankYou = () => {
         <div className="mt-4 d-flex align-items-center" style={{ fontSize: "1.2rem" }}>
           <Button
             as={Link}
-            to="/requests-list"
+            to="/requesters"
             variant="light"
             className="d-flex align-items-center"
             style={{ color: "#333", textDecoration: "none", borderRadius: "60px", backgroundColor: "#f7f7f7" }}

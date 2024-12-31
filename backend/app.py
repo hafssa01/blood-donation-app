@@ -1,12 +1,10 @@
 from flask import Flask, jsonify, request, session, redirect, url_for
 import requests
 from pymongo import MongoClient
-from bson import ObjectId
 import bcrypt
 from flask_cors import CORS
 from google.oauth2 import id_token
 from google.auth.transport import requests
-# from database.db import users
 
 app = Flask(__name__)
 CORS(app)
@@ -102,24 +100,6 @@ def get_list():
 
     records = list(db.forms.find(query, {"_id": 0}))
     return jsonify(records)
-
-# Filter user endpoint
-@app.route('/filter', methods=['POST'])
-def filter_users():
-    filters = {}
-    data = request.json
-
-    if data.get('blood_type'):
-        filters['blood_type'] = {"$regex": data['blood_type'], "$options": "i"}  # Case-insensitive regex for blood type
-    if data.get('location'):
-        filters['location'] = {"$regex": data['location'], "$options": "i"}  # Case-insensitive regex for location
-    if data.get('user_type'):
-        filters['user_type'] = {"$regex": data['user_type'], "$options": "i"}  # Case-insensitive regex for user type
-
-
-    results = list(db.users.find(filters, {"_id": 0, "email": 1, "user_type": 1, "blood_type": 1, "location": 1, "phone_number": 1}))
-
-    return jsonify(results)
 
 if __name__ == '__main__':
     app.run(debug=True)

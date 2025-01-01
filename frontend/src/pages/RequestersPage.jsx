@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
+import NavigationBar from "../components/NavBar";
 import { Container, Row, Col, Card, ListGroup, Button, Form } from "react-bootstrap";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Footer from "../components/Footer";
 
 const RequestersPage = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
@@ -38,10 +40,12 @@ const RequestersPage = () => {
   }, [bloodGroup, location]); // Refetch when bloodGroup or location changes
 
   return (
+    <>
+    <NavigationBar />
     <Container className="py-4">
       <Row className="mb-4">
         <Col>
-          <h1>Requesters List</h1>
+          <h1 className="text-center">Requesters List</h1>
         </Col>
       </Row>
       <Form className="mb-4">
@@ -99,14 +103,18 @@ const RequestersPage = () => {
           </Col>
         ))}
       </Row>
+      <div className="d-flex justify-content-center">
       <Button
-        variant="secondary"
+        variant="danger"
         onClick={() => navigate("/dashboard")}
         style={{ marginTop: "20px" }}
       >
         Back to Dashboard
       </Button>
+      </div>
     </Container>
+    <Footer/>
+    </>
   );
 };
 

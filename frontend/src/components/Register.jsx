@@ -15,6 +15,7 @@ const RegisterForm = () => {
     sex: "",
     phone: "",
     email: "",
+    location:"",
     password: "",
     confirmPassword: "",
   });
@@ -49,6 +50,7 @@ const RegisterForm = () => {
     if (!data.sex) newErrors.sex = "Please select your sex.";
     if (!data.phone || !/^\d+$/.test(data.phone)) newErrors.phone = "Phone number must contain only digits.";
     if (!data.email || !/\S+@\S+\.\S+/.test(data.email)) newErrors.email = "Valid email is required.";
+    if (!data.location) newErrors.location = "Location is required.";
     if (!data.password || data.password.length < 8) newErrors.password = "Password must be at least 8 characters long.";
     if (data.password !== data.confirmPassword) newErrors.confirmPassword = "Passwords do not match.";
     return newErrors;
@@ -166,6 +168,18 @@ const RegisterForm = () => {
                 isInvalid={touched.email && !!errors.email}
               />
               <Form.Text className="text-danger">{errors.email}</Form.Text>
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Location</Form.Label>
+              <Form.Control
+                type="text"
+                name="location"
+                value={formData.location}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                isInvalid={touched.location && !!errors.location}
+              />
+              <Form.Text className="text-danger">{errors.location}</Form.Text>
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Password</Form.Label>

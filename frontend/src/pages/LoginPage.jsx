@@ -34,6 +34,11 @@ const LoginForm = () => {
         const response = await axios.post("http://localhost:5000/login", formData, {
           headers: { "Content-Type": "application/json" },
         });
+
+        // Store the JWT token in localStorage
+        const { access_token } = response.data; // Adjust based on your response structure
+        localStorage.setItem('token', access_token);
+        
         setToastMessage(response.data.message || "Login successful!");
         setShowToast(true);
 

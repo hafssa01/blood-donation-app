@@ -10,7 +10,7 @@ import RequestSent from './pages/RequestSent';
 import RequestersPage from './pages/RequestersPage';
 import ThankYou from './pages/ThanksPage';
 import Dashboard from './pages/DashboardPage';
-import Profile from './pages/ProfilePage';
+import ProfilePage from './pages/ProfilePage';
 import GoogleOAuthLogin from './components/GoogleOAuthLogin';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -29,11 +29,11 @@ const App = () => {
           <Route path="/donate" element={<DonateBloodForm />} />
           <Route path="/request" element={<RequestBloodForm />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/profile" element={<Profile />} />
           <Route path="/thank-you" element={<ThankYou />} />
           <Route path="/sent-request" element={<RequestSent/>} />
           <Route path="/donors" element={<DonorsPage />} />
           <Route path="/requesters" element={<RequestersPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
           
         </Routes>
       </div>

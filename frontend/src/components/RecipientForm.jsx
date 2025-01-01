@@ -224,6 +224,18 @@ const RequestBloodForm = () => {
           </Form>
         </Card>
       </div>
+      <div className="d-flex justify-content-center">
+      <button
+        className="btn  w-45"
+        onClick={() => navigate("/dashboard")}
+        style={{ marginTop: "20px",
+           backgroundColor: 'white', borderColor: "red",
+            color:'red' 
+          }}
+      >
+        Back to Dashboard
+      </button>
+      </div>
       <Footer />
       <ToastContainer position="top-center" className="mt-5">
         <Toast show={showToast} onClose={() => setShowToast(false)} delay={3000} autohide>

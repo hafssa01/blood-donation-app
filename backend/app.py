@@ -5,9 +5,17 @@ import bcrypt
 from flask_cors import CORS
 from google.oauth2 import id_token
 from google.auth.transport import requests
+from flask_jwt_extended import JWTManager,jwt_required, get_jwt_identity,create_access_token
 
 app = Flask(__name__)
 CORS(app)
+
+# JWT Configuration
+app.config['JWT_SECRET_KEY'] = 'F3b!C8e@2A4d#5X6f$7B6a%9C0d^1E4f*9G4h1'  # Change this to a random secret key
+app.config['JWT_TOKEN_LOCATION'] = ['headers']
+
+# Initialize JWT Manager
+jwt = JWTManager(app)
 
 MONGO_URI = "mongodb+srv://hafsalozzi:7eQ5SQksemc56r6D@cluster0.hyqsx.mongodb.net/"
 client = MongoClient(MONGO_URI)
@@ -56,7 +64,8 @@ def register():
         "lastName": data.get('lastName', ""),
         "birthDate": data.get('birthDate', ""),
         "sex": data.get('sex', ""),
-        "phone": data.get('phone', "")
+        "phone": data.get('phone', ""),
+        "location": data.get('location', "")
     })
 
     return jsonify({"message": "User registered successfully!"})
@@ -68,8 +77,14 @@ def login():
     data = request.json
     user = db.users.find_one({"email": data['email']})
     if not user or not bcrypt.checkpw(data['password'].encode('utf-8'), user['password']):
-        return jsonify({"error": "Invalid credentials"}), 400
-    return jsonify({"message": "Login successful!"})
+        return jsonify({"error": "Invalid credentials"}), 401
+    
+
+    # Create a new access token
+    access_token = create_access_token(identity=user['email'])  # Use email as the identity
+    return jsonify({"access_token": access_token}), 200  # Return the token in the response
+
+    
 
 # Logout endpoint
 @app.route('/logout', methods=['GET'])
@@ -100,6 +115,29 @@ def get_list():
 
     records = list(db.forms.find(query, {"_id": 0}))
     return jsonify(records)
+
+# Profile Endpoint
+@app.route('/profile', methods=['GET', 'PUT'])
+@jwt_required()
+def profile():
+    current_user = get_jwt_identity()
+    user = db.users.find_one({"email": current_user})
+
+    if request.method == 'GET':
+        if user:
+            return jsonify({
+                "firstName": user["firstName"],
+                "lastName": user["lastName"],
+                "email": user["email"],
+                "phone": user["phone"],
+                "location": user["location"]
+            })
+        return jsonify({"error": "User not found"}), 404
+
+    if request.method == 'PUT':
+        data = request.json
+        db.users.update_one({"email": current_user}, {"$set": data})
+        return jsonify({"message": "Profile updated successfully!"}), 200
 
 if __name__ == '__main__':
     app.run(debug=True)

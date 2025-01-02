@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Form, Button, Toast, ToastContainer, Col, Row, Card } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import NavigationBar from "./Navbar";
 import Footer from "./Footer";
+import axios from "axios";
 
 const RequestBloodForm = () => {
   const navigate = useNavigate();
@@ -11,33 +12,17 @@ const RequestBloodForm = () => {
     age: "",
     sex: "",
     bloodGroup: "",
-    country: "",
-    city: "",
+    location: "",
     hospital: "",
     reason: "",
     confirmEmergency: false,
+    phoneNumber: "",
+    user_type: "recipient",
   });
 
   const [errors, setErrors] = useState({});
-  const [touched, setTouched] = useState({});
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
-  const [countries, setCountries] = useState([]);
-  const [cities, setCities] = useState([]);
-
-  useEffect(() => {
-    fetch("https://restcountries.com/v3.1/all")
-      .then((response) => response.json())
-      .then((data) => setCountries(data));
-  }, []);
-
-  useEffect(() => {
-    if (formData.country) {
-      fetch(`https://api.teleport.org/api/urban_areas/slug:${formData.country}/cities/`)
-        .then((response) => response.json())
-        .then((data) => setCities(data));
-    }
-  }, [formData.country]);
 
   const handleChange = (e) => {
     const { name, value, checked, type } = e.target;
@@ -45,28 +30,24 @@ const RequestBloodForm = () => {
       ...formData,
       [name]: type === "checkbox" ? checked : value,
     });
-
-    if (touched[name]) {
-      const newErrors = validate({ ...formData, [name]: type === "checkbox" ? checked : value });
-      setErrors(newErrors);
-    }
   };
 
-  const handleBlur = (e) => {
-    const { name } = e.target;
-    setTouched({ ...touched, [name]: true });
-    const newErrors = validate(formData);
-    setErrors(newErrors);
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const newErrors = validate(formData);
 
-    if (Object.keys(newErrors).length === 0 && formData.confirmEmergency) {
-      setToastMessage("Blood request details submitted successfully!");
-      setShowToast(true);
-      setTimeout(() => navigate("/sent-request"), 3000);
+    if (Object.keys(newErrors).length === 0) {
+      try {
+        const response = await axios.post("http://localhost:5000/submit-form", formData, {
+          headers: { "Content-Type": "application/json" },
+        });
+        setToastMessage(response.data.message || "Blood request details submitted successfully!");
+        setShowToast(true);
+        setTimeout(() => navigate("/sent-request"), 3000);
+      } catch (error) {
+        setToastMessage(error.response?.data?.error || "An error occurred while submitting the form.");
+        setShowToast(true);
+      }
     } else {
       setErrors(newErrors);
       setToastMessage("Please fix the errors in the form.");
@@ -76,55 +57,20 @@ const RequestBloodForm = () => {
 
   const validate = (data) => {
     const newErrors = {};
-
-    // Full name validation: only alphabetic characters and spaces
-    const nameRegex = /^[a-zA-Z\s]+$/;
-    if (!data.fullName) {
-      newErrors.fullName = "Full name is required.";
-    } else if (!nameRegex.test(data.fullName)) {
-      newErrors.fullName = "Full name must only contain letters and spaces.";
+    const phoneRegex = /^[0-9]{10}$/; // Example regex for a 10-digit phone number
+    if (!data.phoneNumber) {
+      newErrors.phoneNumber = "Phone number is required.";
+    } else if (!phoneRegex.test(data.phoneNumber)) {
+      newErrors.phoneNumber = "Phone number must be 10 digits.";
     }
-
-    // City validation: no numbers allowed
-    if (data.city && !nameRegex.test(data.city)) {
-      newErrors.city = "City must only contain letters and spaces.";
-    }
-
-    if (!data.age) {
-      newErrors.age = "Age is required.";
-    } else if (parseInt(data.age) < 18) {
-      newErrors.age = "Age must be 18 or above.";
-    }
-
-    if (!data.sex) {
-      newErrors.sex = "Please select your sex.";
-    }
-
-    if (!data.bloodGroup) {
-      newErrors.bloodGroup = "Blood group is required.";
-    }
-
-    if (!data.country) {
-      newErrors.country = "Country is required.";
-    }
-
-    if (!data.city) {
-      newErrors.city = "City is required.";
-    }
-
-    if (!data.hospital) {
-      newErrors.hospital = "Hospital name is required.";
-    }
-
-    if (!data.reason) {
-      newErrors.reason = "Reason for blood request is required.";
-    }
-
-    // Checkboxes validation
-    if (!data.confirmEmergency) {
-      newErrors.confirmEmergency = "Please confirm that this is an emergency.";
-    }
-
+    if (!data.fullName) newErrors.fullName = "Full name is required.";
+    if (!data.age) newErrors.age = "Age is required.";
+    if (!data.sex) newErrors.sex = "Please select your sex.";
+    if (!data.bloodGroup) newErrors.bloodGroup = "Blood group is required.";
+    if (!data.location) newErrors.city = "location is required.";
+    if (!data.hospital) newErrors.hospital = "Hospital name is required.";
+    if (!data.reason) newErrors.reason = "Reason for blood request is required.";
+    if (!data.confirmEmergency) newErrors.confirmEmergency = "Please confirm that this is an emergency.";
     return newErrors;
   };
 
@@ -144,8 +90,7 @@ const RequestBloodForm = () => {
                     name="fullName"
                     value={formData.fullName}
                     onChange={handleChange}
-                    onBlur={handleBlur}
-                    isInvalid={touched.fullName && !!errors.fullName}
+                    isInvalid={!!errors.fullName}
                   />
                   <Form.Text className="text-danger">{errors.fullName}</Form.Text>
                 </Form.Group>
@@ -160,8 +105,7 @@ const RequestBloodForm = () => {
                     name="age"
                     value={formData.age}
                     onChange={handleChange}
-                    onBlur={handleBlur}
-                    isInvalid={touched.age && !!errors.age}
+                    isInvalid={!!errors.age}
                   />
                   <Form.Text className="text-danger">{errors.age}</Form.Text>
                 </Form.Group>
@@ -174,8 +118,7 @@ const RequestBloodForm = () => {
                     name="sex"
                     value={formData.sex}
                     onChange={handleChange}
-                    onBlur={handleBlur}
-                    isInvalid={touched.sex && !!errors.sex}
+                    isInvalid={!!errors.sex}
                   >
                     <option value="">Select</option>
                     <option value="male">Male</option>
@@ -193,8 +136,7 @@ const RequestBloodForm = () => {
                 name="bloodGroup"
                 value={formData.bloodGroup}
                 onChange={handleChange}
-                onBlur={handleBlur}
-                isInvalid={touched.bloodGroup && !!errors.bloodGroup}
+                isInvalid={!!errors.bloodGroup}
               >
                 <option value="">Select Blood Group</option>
                 <option value="A+">A+</option>
@@ -209,36 +151,31 @@ const RequestBloodForm = () => {
               <Form.Text className="text-danger">{errors.bloodGroup}</Form.Text>
             </Form.Group>
             <Form.Group className="mb-3">
-              <Form.Label>Country</Form.Label>
-              <Form.Control
-                as="select"
-                name="country"
-                value={formData.country}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                isInvalid={touched.country && !!errors.country}
-              >
-                <option value="">Select Country</option>
-                {countries.map((country) => (
-                  <option key={country.cca3} value={country.name.common}>
-                    {country.name.common}
-                  </option>
-                ))}
-              </Form.Control>
-              <Form.Text className="text-danger">{errors.country}</Form.Text>
-            </Form.Group>
-            <Form.Group className="mb-3">
-              <Form.Label>City (Zone)</Form.Label>
+              <Form.Label>Location</Form.Label>
               <Form.Control
                 type="text"
-                name="city"
-                value={formData.city}
+                name="location"
+                value={formData.location}
                 onChange={handleChange}
-                onBlur={handleBlur}
-                isInvalid={touched.city && !!errors.city}
+                isInvalid={!!errors.location}
               />
-              <Form.Text className="text-danger">{errors.city}</Form.Text>
+              <Form.Text className="text-danger">{errors.location}</Form.Text>
             </Form.Group>
+            <Row>
+              <Col xs={12}>
+                <Form.Group className="mb-3">
+                  <Form.Label>Phone Number</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="phoneNumber"
+                    value={formData.phoneNumber}
+                    onChange={handleChange}
+                    isInvalid={!!errors.phoneNumber}
+                  />
+                  <Form.Text className="text-danger">{errors.phoneNumber}</Form.Text>
+                </Form.Group>
+              </Col>
+            </Row>
             <Form.Group className="mb-3">
               <Form.Label>Hospital</Form.Label>
               <Form.Control
@@ -246,8 +183,7 @@ const RequestBloodForm = () => {
                 name="hospital"
                 value={formData.hospital}
                 onChange={handleChange}
-                onBlur={handleBlur}
-                isInvalid={touched.hospital && !!errors.hospital}
+                isInvalid={!!errors.hospital}
               />
               <Form.Text className="text-danger">{errors.hospital}</Form.Text>
             </Form.Group>
@@ -258,8 +194,7 @@ const RequestBloodForm = () => {
                 name="reason"
                 value={formData.reason}
                 onChange={handleChange}
-                onBlur={handleBlur}
-                isInvalid={touched.reason && !!errors.reason}
+                isInvalid={!!errors.reason}
               />
               <Form.Text className="text-danger">{errors.reason}</Form.Text>
             </Form.Group>
@@ -270,8 +205,7 @@ const RequestBloodForm = () => {
                 label="I confirm that this is an emergency."
                 checked={formData.confirmEmergency}
                 onChange={handleChange}
-                onBlur={handleBlur}
-                isInvalid={touched.confirmEmergency && !!errors.confirmEmergency}
+                isInvalid={!!errors.confirmEmergency}
               />
               <Form.Text className="text-danger">{errors.confirmEmergency}</Form.Text>
             </Form.Group>
@@ -289,6 +223,18 @@ const RequestBloodForm = () => {
             </Button>
           </Form>
         </Card>
+      </div>
+      <div className="d-flex justify-content-center">
+      <button
+        className="btn  w-45"
+        onClick={() => navigate("/dashboard")}
+        style={{ marginTop: "20px",
+           backgroundColor: 'white', borderColor: "red",
+            color:'red' 
+          }}
+      >
+        Back to Dashboard
+      </button>
       </div>
       <Footer />
       <ToastContainer position="top-center" className="mt-5">

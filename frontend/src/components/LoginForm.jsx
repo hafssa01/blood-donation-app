@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { Form, Button, Toast, ToastContainer, Card, Navbar } from "react-bootstrap";
+import { Form, Button, Toast, ToastContainer, Card } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import NavigationBar from "../components/Navbar";
-import Footer from "../components/Footer";
+import { useDispatch } from 'react-redux';
+import NavigationBar from "./Navbar";
+import Footer from "./Footer";
 import GoogleOAuthLogin from "../components/GoogleAuth";
 
 const LoginForm = () => {
@@ -15,13 +16,13 @@ const LoginForm = () => {
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
 
-  const navigate = useNavigate(); // React Router's navigation hook
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
 
-    // Update errors in real-time
     const newErrors = validate({ ...formData, [name]: value });
     setErrors(newErrors);
   };
@@ -34,9 +35,12 @@ const LoginForm = () => {
       setToastMessage('Login successful!');
       setShowToast(true);
 
+      // Dispatch login action
+      dispatch(login({ email: formData.email }));
+
       // Navigate to the dashboard after a short delay
       setTimeout(() => {
-        navigate("/dashboard"); // Adjust the route to match your dashboard path
+        navigate("/dashboard");
       }, 1000);
     } else {
       setErrors(newErrors);
@@ -52,7 +56,7 @@ const LoginForm = () => {
 
   return (
     <>
-      <NavigationBar/>
+      <NavigationBar />
 
       <div className="d-flex justify-content-center align-items-center min-vh-100">
         <Card className="p-5 w-100" style={{ maxWidth: '600px', borderRadius: '15px' }}>
@@ -123,7 +127,7 @@ const LoginForm = () => {
           </Toast>
         </ToastContainer>
       </div>
-      <Footer/>
+      <Footer />
     </>
   );
 };

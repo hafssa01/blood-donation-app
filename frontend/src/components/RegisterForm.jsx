@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import { Form, Button, Toast, ToastContainer, Col, Row, Card } from "react-bootstrap";
+import axios from "axios";
+import { Form, Button, Toast, ToastContainer, Col, Row, Card, Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import NavigationBar from "./Navbar";
 import Footer from "./Footer";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const RegisterForm = () => {
   const navigate = useNavigate();
@@ -13,6 +15,7 @@ const RegisterForm = () => {
     sex: "",
     phone: "",
     email: "",
+    location:"",
     password: "",
     confirmPassword: "",
   });
@@ -39,14 +42,39 @@ const RegisterForm = () => {
     setErrors(newErrors);
   };
 
-  const handleSubmit = (e) => {
+  const validate = (data) => {
+    const newErrors = {};
+    if (!data.firstName) newErrors.firstName = "First name is required.";
+    if (!data.lastName) newErrors.lastName = "Last name is required.";
+    if (!data.birthDate) newErrors.birthDate = "Birth date is required.";
+    if (!data.sex) newErrors.sex = "Please select your sex.";
+    if (!data.phone || !/^\d+$/.test(data.phone)) newErrors.phone = "Phone number must contain only digits.";
+    if (!data.email || !/\S+@\S+\.\S+/.test(data.email)) newErrors.email = "Valid email is required.";
+    if (!data.location) newErrors.location = "Location is required.";
+    if (!data.password || data.password.length < 8) newErrors.password = "Password must be at least 8 characters long.";
+    if (data.password !== data.confirmPassword) newErrors.confirmPassword = "Passwords do not match.";
+    return newErrors;
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const newErrors = validate(formData);
 
     if (Object.keys(newErrors).length === 0) {
-      setToastMessage("Registration successful!");
-      setShowToast(true);
-      setTimeout(() => navigate("/login"), 3000);
+      try {
+        const response = await axios.post("http://localhost:5000/register", formData, {
+          headers: { "Content-Type": "application/json" },
+        });
+        setToastMessage(response.data.message || "Registration successful!");
+        setShowToast(true);
+        setTimeout(() => {
+          setShowToast(false);
+          navigate("/login");
+        }, 3000);
+      } catch (error) {
+        setToastMessage(error.response?.data?.error || "An error occurred during registration.");
+        setShowToast(true);
+      }
     } else {
       setErrors(newErrors);
       setToastMessage("Please fix the errors in the form.");
@@ -54,51 +82,10 @@ const RegisterForm = () => {
     }
   };
 
-  const validate = (data) => {
-    const newErrors = {};
-    if (!data.firstName) {
-      newErrors.firstName = "First name is required.";
-    } else if (!/^[A-Za-z]+$/.test(data.firstName)) {
-      newErrors.firstName = "First name must contain only alphabetic characters.";
-    }
-    if (!data.lastName) {
-      newErrors.lastName = "Last name is required.";
-    } else if (!/^[A-Za-z]+$/.test(data.lastName)) {
-      newErrors.lastName = "Last name must contain only alphabetic characters.";
-    }
-    if (!data.birthDate) {
-      newErrors.birthDate = "Birth date is required.";
-    }
-    if (!data.sex) {
-      newErrors.sex = "Please select your sex.";
-    }
-    if (!data.phone) {
-      newErrors.phone = "Phone number is required.";
-    } else if (!/^\d+$/.test(data.phone)) {
-      newErrors.phone = "Phone number must contain only digits.";
-    }
-    if (!data.email) {
-      newErrors.email = "Email is required.";
-    } else if (!/\S+@\S+\.\S+/.test(data.email)) {
-      newErrors.email = "Email is invalid.";
-    }
-    if (!data.password) {
-      newErrors.password = "Password is required.";
-    } else if (data.password.length < 8) {
-      newErrors.password = "Password must be at least 8 characters long.";
-    }
-    if (!data.confirmPassword) {
-      newErrors.confirmPassword = "Please confirm your password.";
-    } else if (data.password !== data.confirmPassword) {
-      newErrors.confirmPassword = "Passwords do not match.";
-    }
-    return newErrors;
-  };
-
   return (
     <>
       <NavigationBar />
-      <div className="d-flex justify-content-center align-items-center mt-3" style={{ minHeight: "100vh" }}>
+      <Container className="d-flex justify-content-center align-items-center mt-3" style={{ minHeight: "100vh" }}>
         <Card className="p-4" style={{ width: "100%", maxWidth: "600px" }}>
           <h2 className="text-center mb-4">Register</h2>
           <Form onSubmit={handleSubmit}>
@@ -186,6 +173,18 @@ const RegisterForm = () => {
               <Form.Text className="text-danger">{errors.email}</Form.Text>
             </Form.Group>
             <Form.Group className="mb-3">
+              <Form.Label>Location</Form.Label>
+              <Form.Control
+                type="text"
+                name="location"
+                value={formData.location}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                isInvalid={touched.location && !!errors.location}
+              />
+              <Form.Text className="text-danger">{errors.location}</Form.Text>
+            </Form.Group>
+            <Form.Group className="mb-3">
               <Form.Label>Password</Form.Label>
               <Form.Control
                 type="password"
@@ -225,7 +224,7 @@ const RegisterForm = () => {
           </Form>
         </Card>
 
-        <ToastContainer position="top-end" className="p-3">
+        <ToastContainer position="bottom-end" className="p-3">
           <Toast onClose={() => setShowToast(false)} show={showToast} delay={3000} autohide>
             <Toast.Header>
               <strong className="me-auto">Notification</strong>
@@ -233,7 +232,7 @@ const RegisterForm = () => {
             <Toast.Body>{toastMessage}</Toast.Body>
           </Toast>
         </ToastContainer>
-      </div>
+      </Container>
       <Footer />
     </>
   );

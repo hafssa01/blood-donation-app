@@ -22,7 +22,7 @@ const NavigationBar = ({ isLoggedIn, onLogout }) => {
             src={logo}  // Source of the logo image
             alt="Logo"
             className="img-fluid"  // Makes the image responsive
-            style={{ maxHeight: '80px' }}  // Set maximum height to control the size
+            style={{ maxHeight: '67px' }}  // Set maximum height to control the size
           />
         </a>
 
@@ -40,9 +40,9 @@ const NavigationBar = ({ isLoggedIn, onLogout }) => {
         </button>
 
         {/* Navbar Links */}
-        <div className="collapse navbar-collapse" id="navbarNav">
+        <div className="collapse navbar-collapse mx-5" id="navbarNav">
           <ul className="navbar-nav mx-auto"> {/* Centers the Home link */}
-            <li className="nav-item mx-3">
+            <li className="nav-item mx-2">
               <a
                 className="nav-link"
                 href="/"
@@ -53,7 +53,7 @@ const NavigationBar = ({ isLoggedIn, onLogout }) => {
                 Home
               </a>
             </li>
-            <li className="nav-item mx-3">
+            <li className="nav-item mx-2">
               <a
                 className="nav-link"
                 href="/"
@@ -64,7 +64,7 @@ const NavigationBar = ({ isLoggedIn, onLogout }) => {
                 About Us
               </a>
             </li>
-            <li className="nav-item mx-3">
+            <li className="nav-item mx-2">
               <a
                 className="nav-link"
                 href="/"
@@ -75,7 +75,7 @@ const NavigationBar = ({ isLoggedIn, onLogout }) => {
                 Cantact Us
               </a>
             </li>
-            <li className="nav-item mx-3">
+            <li className="nav-item mx-2">
               <a
                 className="nav-link"
                 href="/"
@@ -91,7 +91,7 @@ const NavigationBar = ({ isLoggedIn, onLogout }) => {
           {/* If logged in, show additional buttons */}
           {isLoggedIn ? (
             <ul className="navbar-nav ms-auto"> {/* Align buttons to the right */}
-              <li className="nav-item">
+              <li className="nav-item mx-2">
                 <a
                   className="nav-link d-flex align-items-center gap-2"
                   href="/profile"
@@ -115,7 +115,7 @@ const NavigationBar = ({ isLoggedIn, onLogout }) => {
                   Donate Blood
                 </a>
               </li>
-              <li className="nav-item">
+              <li className="nav-item mx-2">
                 <a
                   className="nav-link d-flex align-items-center gap-2"
                   href="/request"
@@ -127,7 +127,7 @@ const NavigationBar = ({ isLoggedIn, onLogout }) => {
                   Request Blood
                 </a>
               </li>
-              <li className="nav-item">
+              <li className="nav-item mx-2">
                 <button
                   className="nav-link btn btn-link d-flex align-items-center gap-2 "
                   style={linkStyle}

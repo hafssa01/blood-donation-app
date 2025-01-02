@@ -5,12 +5,13 @@ import bcrypt
 from flask_cors import CORS
 from google.oauth2 import id_token
 from google.auth.transport import requests
+from datetime import timedelta
 from flask_jwt_extended import JWTManager,jwt_required, get_jwt_identity,create_access_token
 
 app = Flask(__name__)
 CORS(app)
 
-# JWT Configuration
+# JWT Configurations
 app.config['JWT_SECRET_KEY'] = 'F3b!C8e@2A4d#5X6f$7B6a%9C0d^1E4f*9G4h1'  # Change this to a random secret key
 app.config['JWT_TOKEN_LOCATION'] = ['headers']
 
@@ -81,7 +82,7 @@ def login():
     
 
     # Create a new access token
-    access_token = create_access_token(identity=user['email'])  # Use email as the identity
+    access_token = create_access_token(identity=user['email'], expires_delta=False)  # Use email as the identity
     return jsonify({"access_token": access_token}), 200  # Return the token in the response
 
     

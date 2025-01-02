@@ -71,7 +71,7 @@ const ProfilePage = () => {
       ) : (
         <div className="text-center">
           {/* Profile Icon */}
-          <FaUserCircle size={150} className="mb-3 text-danger" />
+          <FaUserCircle size={150} className="mb-4 text-danger" />
           {successMessage && <p className="text-success text-center">{successMessage}</p>}
 
           {/* Profile Details */}

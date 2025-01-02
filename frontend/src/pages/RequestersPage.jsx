@@ -24,7 +24,7 @@ const RequestersPage = () => {
     setLoading(true);
     setError("");
     try {
-      const response = await axios.get("http://localhost:5000/list", {
+      const response = await axios.get(`${import.meta.env.VITE_BACKEND_API_URL}/list`, {
         params: { user_type: "recipient", bloodGroup: bloodGroup || null, location: location || null },
       });
       setRequesters(response.data);

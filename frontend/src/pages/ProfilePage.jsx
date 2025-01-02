@@ -24,7 +24,7 @@ const ProfilePage = () => {
     setLoading(true);
     setError('');
     try {
-      const response = await axios.get('http://localhost:5000/profile', {
+      const response = await axios.get(`${import.meta.env.VITE_BACKEND_API_URL}/profile`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
       });
       setProfileData(response.data);
@@ -42,7 +42,7 @@ const ProfilePage = () => {
     setError('');
     setSuccessMessage('');
     try {
-      await axios.put('http://localhost:5000/profile', profileData, {
+      await axios.put(`${import.meta.env.VITE_BACKEND_API_URL}/profile`, profileData, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
       });
       setSuccessMessage('Profile updated successfully!');

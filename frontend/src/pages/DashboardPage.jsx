@@ -23,7 +23,7 @@ const Dashboard = () => {
     setLoading(true);
     setError("");
     try {
-      const response = await axios.get("http://localhost:5000/list", {
+      const response = await axios.get(`${import.meta.env.VITE_BACKEND_API_URL}/list`, {
         params: { user_type: "donor" },
       });
       setDonor(response.data[0]); // Fetch one donor
@@ -38,7 +38,7 @@ const Dashboard = () => {
     setLoading(true);
     setError("");
     try {
-      const response = await axios.get("http://localhost:5000/list", {
+      const response = await axios.get(`${import.meta.env.VITE_BACKEND_API_URL}/list`, {
         params: { user_type: "recipient" },
       });
       setRecipient(response.data[0]); // Fetch one recipient

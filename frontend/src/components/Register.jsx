@@ -62,7 +62,7 @@ const RegisterForm = () => {
 
     if (Object.keys(newErrors).length === 0) {
       try {
-        const response = await axios.post("http://localhost:5000/register", formData, {
+        const response = await axios.post(`${import.meta.env.VITE_BACKEND_API_URL}/register`, formData, {
           headers: { "Content-Type": "application/json" },
         });
         setToastMessage(response.data.message || "Registration successful!");

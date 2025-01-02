@@ -31,7 +31,7 @@ const LoginForm = () => {
     const newErrors = validate(formData);
     if (Object.keys(newErrors).length === 0) {
       try {
-        const response = await axios.post("http://localhost:5000/login", formData, {
+        const response = await axios.post(`${import.meta.env.VITE_BACKEND_API_URL}/login`, formData, {
           headers: { "Content-Type": "application/json" },
         });
 

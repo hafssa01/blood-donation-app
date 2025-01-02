@@ -1,25 +1,27 @@
 from flask import Flask, jsonify, request, session, redirect, url_for
 import requests
 from pymongo import MongoClient
+from dotenv import load_dotenv
+import os
 import bcrypt
 from flask_cors import CORS
 from google.oauth2 import id_token
 from google.auth.transport import requests
-from datetime import timedelta
 from flask_jwt_extended import JWTManager,jwt_required, get_jwt_identity,create_access_token
 
 app = Flask(__name__)
+load_dotenv() 
 CORS(app)
 
 # JWT Configurations
-app.config['JWT_SECRET_KEY'] = 'F3b!C8e@2A4d#5X6f$7B6a%9C0d^1E4f*9G4h1'  # Change this to a random secret key
+app.config['JWT_SECRET_KEY'] = os.environ.get('JWT_SECRET_KEY')
 app.config['JWT_TOKEN_LOCATION'] = ['headers']
 
 # Initialize JWT Manager
 jwt = JWTManager(app)
 
-MONGO_URI = "mongodb+srv://hafsalozzi:7eQ5SQksemc56r6D@cluster0.hyqsx.mongodb.net/"
-client = MongoClient(MONGO_URI)
+mongo_uri = os.environ.get("MONGO_URI")
+client = MongoClient(mongo_uri)
 db = client["blood_donation_db"] 
 
 # Home page

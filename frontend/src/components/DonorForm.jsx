@@ -39,7 +39,7 @@ const DonateBloodForm = () => {
 
     if (Object.keys(newErrors).length === 0) {
       try {
-        const response = await axios.post("http://localhost:5000/submit-form", formData, {
+        const response = await axios.post(`${import.meta.env.VITE_BACKEND_API_URL}/submit-form`, formData, {
           headers: { "Content-Type": "application/json" },
         });
         setToastMessage(response.data.message || "Blood donation details submitted successfully!");

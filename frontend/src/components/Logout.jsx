@@ -3,7 +3,7 @@ import axios from "axios";
 const logOut = async (setLogged) => {
   try {
     // Send a GET request to the backend logout endpoint
-    const response = await axios.get("http://localhost:5000/logout", {
+    const response = await axios.get(`${import.meta.env.VITE_BACKEND_API_URL}/logout`, {
       withCredentials: true, // Include cookies for session management
     });
 

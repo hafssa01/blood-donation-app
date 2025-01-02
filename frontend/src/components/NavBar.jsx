@@ -22,7 +22,7 @@ const NavigationBar = ({ isLoggedIn, onLogout }) => {
             src={logo}  // Source of the logo image
             alt="Logo"
             className="img-fluid"  // Makes the image responsive
-            style={{ maxHeight: '67px' }}  // Set maximum height to control the size
+            style={{ maxHeight: '70px' }}  // Set maximum height to control the size
           />
         </a>
 

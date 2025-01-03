@@ -59,7 +59,6 @@ const Dashboard = () => {
       <div>
         <NavigationBar isLoggedIn={isLoggedIn} onLogout={handleLogout} />
       </div>
-
       <Container className="flex-grow-1 py-4 mt-2">
         <Row className="justify-content-center mb-4">
           <Col md={6}>

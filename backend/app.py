@@ -11,7 +11,7 @@ from flask_jwt_extended import JWTManager,jwt_required, get_jwt_identity,create_
 
 app = Flask(__name__)
 load_dotenv() 
-CORS(app, origins=["http://localhost:5173", "https://blood-connect.vercel.app"])
+CORS(app, origins=["http://localhost:5173", "blood-connect-mauve.vercel.app"])
 
 # JWT Configurations
 app.config['JWT_SECRET_KEY'] = os.environ.get('JWT_SECRET_KEY')

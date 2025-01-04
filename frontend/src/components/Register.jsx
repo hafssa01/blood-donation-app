@@ -7,6 +7,7 @@ import Footer from "./Footer";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const RegisterForm = () => {
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     firstName: "",
@@ -58,6 +59,7 @@ const RegisterForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const newErrors = validate(formData);
 
     if (Object.keys(newErrors).length === 0) {
@@ -67,6 +69,7 @@ const RegisterForm = () => {
         });
         setToastMessage(response.data.message || "Registration successful!");
         setShowToast(true);
+        setLoading(false);
         setTimeout(() => navigate("/login"), 3000);
       } catch (error) {
         setToastMessage(error.response?.data?.error || "An error occurred during registration.");
@@ -141,7 +144,6 @@ const RegisterForm = () => {
                 <option value="">Select</option>
                 <option value="male">Male</option>
                 <option value="female">Female</option>
-                <option value="other">Other</option>
               </Form.Control>
               <Form.Text className="text-danger">{errors.sex}</Form.Text>
             </Form.Group>
@@ -205,8 +207,20 @@ const RegisterForm = () => {
               />
               <Form.Text className="text-danger">{errors.confirmPassword}</Form.Text>
             </Form.Group>
-            <Button className="mt-4 w-100" variant="danger" type="submit">
-              Register
+            <Button className="mt-4 w-100" disabled={loading} variant="danger" type="submit">
+            {loading ? (
+          <>
+            <span 
+              className="spinner-border spinner-border-sm me-2" 
+              role="status" 
+              aria-hidden="true">
+            </span>
+            Please wait...
+          </>
+        ) : (
+          'Register'
+        )}
+          
             </Button>
           </Form>
         </Card>

@@ -6,6 +6,7 @@ import Footer from "./Footer";
 import axios from "axios";
 
 const RequestBloodForm = () => {
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     fullName: "",
@@ -34,6 +35,7 @@ const RequestBloodForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const newErrors = validate(formData);
 
     if (Object.keys(newErrors).length === 0) {
@@ -43,6 +45,7 @@ const RequestBloodForm = () => {
         });
         setToastMessage(response.data.message || "Blood request details submitted successfully!");
         setShowToast(true);
+        setLoading(false);
         setTimeout(() => navigate("/sent-request"), 3000);
       } catch (error) {
         setToastMessage(error.response?.data?.error || "An error occurred while submitting the form.");
@@ -123,7 +126,6 @@ const RequestBloodForm = () => {
                     <option value="">Select</option>
                     <option value="male">Male</option>
                     <option value="female">Female</option>
-                    <option value="other">Other</option>
                   </Form.Control>
                   <Form.Text className="text-danger">{errors.sex}</Form.Text>
                 </Form.Group>
@@ -211,6 +213,7 @@ const RequestBloodForm = () => {
             </Form.Group>
             <Button
               type="submit"
+              disabled={loading}
               className="w-100 mb-2"
               style={{
                 backgroundColor: "#ff2c2c",
@@ -219,7 +222,18 @@ const RequestBloodForm = () => {
                 color: "white",
               }}
             >
-              Request Blood
+              {loading ? (
+          <>
+            <span 
+              className="spinner-border spinner-border-sm me-2" 
+              role="status" 
+              aria-hidden="true">
+            </span>
+            Please wait...
+          </>
+        ) : (
+          'Request Blood'
+        )}
             </Button>
           </Form>
         </Card>

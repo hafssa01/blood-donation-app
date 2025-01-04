@@ -6,6 +6,7 @@ import axios from "axios";
 import Footer from "../components/Footer";
 
 const LoginForm = () => {
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -28,6 +29,9 @@ const LoginForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+
+
     const newErrors = validate(formData);
     if (Object.keys(newErrors).length === 0) {
       try {
@@ -41,7 +45,7 @@ const LoginForm = () => {
         
         setToastMessage(response.data.message || "Login successful!");
         setShowToast(true);
-
+        setLoading(false);
         // Navigate to the dashboard after a short delay
         setTimeout(() => {
           navigate("/dashboard"); // Adjust the route to match your dashboard path
@@ -99,6 +103,7 @@ const LoginForm = () => {
 
             <Button
               className="mt-4 w-100"
+              disabled={loading}
               variant="danger"
               type="submit"
               style={{
@@ -108,11 +113,20 @@ const LoginForm = () => {
                 border: 'none',
               }}
             >
-              Login
+              {loading ? (
+          <>
+            <span 
+              className="spinner-border spinner-border-sm me-2" 
+              role="status" 
+              aria-hidden="true">
+            </span>
+            Please wait...
+          </>
+        ) : (
+          'Login'
+        )}
+              
             </Button>
-            <>
-
-            </>
 
             <p className="text-center mt-3">
               Don't have an account? <a href="/register" className="text-primary">Register</a>

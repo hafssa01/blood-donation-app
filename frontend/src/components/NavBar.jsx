@@ -76,17 +76,6 @@ const NavigationBar = ({ isLoggedIn, onLogout }) => {
                 Cantact Us
               </a>
             </li>
-            <li className="nav-item mx-2">
-              <a
-                className="nav-link"
-                href="/"
-                style={linkStyle}
-                onMouseEnter={(e) => e.target.style.color = linkHoverStyle.color}
-                onMouseLeave={(e) => e.target.style.color = linkStyle.color}
-              >
-                FAQs
-              </a>
-            </li>
           </ul>
 
           {/* If logged in, show additional buttons */}

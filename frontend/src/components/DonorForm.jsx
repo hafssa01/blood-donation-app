@@ -6,6 +6,7 @@ import Footer from "./Footer";
 import axios from "axios"; 
 
 const DonateBloodForm = () => {
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     fullName: "",
@@ -35,6 +36,7 @@ const DonateBloodForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const newErrors = validate(formData);
 
     if (Object.keys(newErrors).length === 0) {
@@ -44,6 +46,7 @@ const DonateBloodForm = () => {
         });
         setToastMessage(response.data.message || "Blood donation details submitted successfully!");
         setShowToast(true);
+        setLoading(false);
         setTimeout(() => navigate("/thank-you"), 3000);
       } catch (error) {
         setToastMessage(error.response?.data?.error || "An error occurred while submitting the form.");
@@ -124,7 +127,6 @@ const DonateBloodForm = () => {
                       <option value="">Select</option>
                       <option value="male">Male</option>
                       <option value="female">Female</option>
-                      <option value="other">Other</option>
                     </Form.Control>
                     <Form.Text className="text-danger">{errors.sex}</Form.Text>
                   </Form.Group>
@@ -212,6 +214,7 @@ const DonateBloodForm = () => {
               </Form.Group>
               <Button
                 type="submit"
+                disabled={loading}
                 className="w-100 mb-2"
                 style={{
                   backgroundColor: "#ff2c2c",
@@ -220,7 +223,19 @@ const DonateBloodForm = () => {
                   color: "white",
                 }}
               >
-                Donate
+                {loading ? (
+          <>
+            <span 
+              className="spinner-border spinner-border-sm me-2" 
+              role="status" 
+              aria-hidden="true">
+            </span>
+            Please wait...
+          </>
+        ) : (
+          'Donate'
+        )}
+              
               </Button>
             </Form>
           </Card>

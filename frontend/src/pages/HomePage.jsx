@@ -2,6 +2,7 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import NavigationBar from '../components/NavBar';
 import banner from '../assets/banner.png';
+import img2 from '../assets/img2.png'
 import Footer from '../components/Footer';
 
 const HomePage = () => {
@@ -33,8 +34,8 @@ const HomePage = () => {
           </div>
           <div className="col-md-6">
             <img
-              src="/src/assets/img2.png" // Replace with your image source
-              alt="Placeholder"
+              src={img2}
+              alt="Donate"
               className="img-fluid"
             />
           </div>

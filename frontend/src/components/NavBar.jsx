@@ -1,6 +1,7 @@
 import React from 'react';
 import { User, LogIn, LogOut, Heart, UserPlus, Share2 } from 'lucide-react';  // Add necessary icons
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import logo from '../assets/logo.png';  // Adjust path if necessary
 
 const NavigationBar = ({ isLoggedIn, onLogout }) => {

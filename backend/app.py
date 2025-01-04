@@ -5,8 +5,6 @@ from dotenv import load_dotenv
 import os
 import bcrypt
 from flask_cors import CORS
-from google.oauth2 import id_token
-from google.auth.transport import requests
 from flask_jwt_extended import JWTManager,jwt_required, get_jwt_identity,create_access_token
 
 app = Flask(__name__)
@@ -28,19 +26,6 @@ db = client["blood_donation_db"]
 @app.route('/home')
 def home():
     return "Welcome to the Blood Donation App!"
-
-# googleOath endpoint
-@app.route('/google-login', methods=['POST'])
-def google_login():
-    token = request.json.get('token')
-    try:
-        # Verify the token using Google API
-        idinfo = id_token.verify_oauth2_token(token, requests.Request(), "631991351745-ajb9fr252d7qt7e5p4hn0ht3fdirrqt6.apps.googleusercontent.com")
-        # Example: Extract user's email
-        email = idinfo.get('email')
-        return jsonify({"message": "Login successful!", "email": email}), 200
-    except ValueError:
-        return jsonify({"error": "Invalid token"}), 400
 
 # Register endpoint
 @app.route('/register', methods=['POST'])

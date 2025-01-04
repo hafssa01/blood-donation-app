@@ -11,7 +11,6 @@ import RequestersPage from './pages/RequestersPage';
 import ThankYou from './pages/ThanksPage';
 import Dashboard from './pages/DashboardPage';
 import ProfilePage from './pages/ProfilePage';
-import GoogleOAuthLogin from './components/GoogleOAuthLogin';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const App = () => {
@@ -24,7 +23,6 @@ const App = () => {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginForm />} />
-          <Route path="/google-login" element={<GoogleOAuthLogin />} />
           <Route path="/register" element={<Register />} />
           <Route path="/donate" element={<DonateBloodForm />} />
           <Route path="/request" element={<RequestBloodForm />} />

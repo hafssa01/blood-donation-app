@@ -1,7 +1,7 @@
 # Blood Donation Web App
 
 ## Project Overview  
-This is a web application designed to connect blood donors with recipients in need. It allows users to register as donors, request blood, and search for donors by location and blood type. The platform aims to make blood donation easier and more accessible.  
+This is a web application designed to connect blood donors with recipients in need. It allows users to fill forms as donors or recipientss, and search for donors or recipients by location and blood type. The platform aims to make blood donation easier and more accessible.  
 
 ## Features  
 - **User Registration**: Register with personal details.

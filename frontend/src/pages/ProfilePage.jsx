@@ -71,7 +71,7 @@ const ProfilePage = () => {
       ) : (
         <div className="text-center">
           {/* Profile Icon */}
-          <FaUserCircle size={150} className="mb-4 text-danger" />
+          <FaUserCircle size={150} color='#ff2c2c' className="mb-4" />
           {successMessage && <p className="text-success text-center">{successMessage}</p>}
 
           {/* Profile Details */}
@@ -155,11 +155,20 @@ const ProfilePage = () => {
                 
               />
             </div>
-            
-            
-            <button type="submit" className="btn btn-danger w-100">
-              Save Changes
+            <button
+                type="submit"
+                className="btn w-100"
+                style={{
+                  backgroundColor: "#ff2c2c",
+                  borderRadius: "20px",
+                  color: "white",
+                  border: "none",
+                }}
+              >
+                Save Changes
             </button>
+            
+            
             
           </form>
           
@@ -170,8 +179,8 @@ const ProfilePage = () => {
         className="btn  w-45"
         onClick={() => navigate("/dashboard")}
         style={{ marginTop: "20px",
-           backgroundColor: 'white', borderColor: "red",
-            color:'red' 
+           backgroundColor: 'white', borderColor: "#ff2c2c",borderRadius: "20px",
+            color:"#ff2c2c" 
           }}
       >
         Back to Dashboard

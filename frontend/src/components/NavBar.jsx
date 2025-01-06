@@ -57,7 +57,7 @@ const NavigationBar = ({ isLoggedIn, onLogout }) => {
             <li className="nav-item mx-2">
               <a
                 className="nav-link"
-                href="/"
+                href="/about"
                 style={linkStyle}
                 onMouseEnter={(e) => e.target.style.color = linkHoverStyle.color}
                 onMouseLeave={(e) => e.target.style.color = linkStyle.color}
@@ -68,7 +68,7 @@ const NavigationBar = ({ isLoggedIn, onLogout }) => {
             <li className="nav-item mx-2">
               <a
                 className="nav-link"
-                href="/"
+                href="/contact"
                 style={linkStyle}
                 onMouseEnter={(e) => e.target.style.color = linkHoverStyle.color}
                 onMouseLeave={(e) => e.target.style.color = linkStyle.color}

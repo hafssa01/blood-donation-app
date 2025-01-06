@@ -11,6 +11,9 @@ import RequestersPage from './pages/RequestersPage';
 import ThankYou from './pages/ThanksPage';
 import Dashboard from './pages/DashboardPage';
 import ProfilePage from './pages/ProfilePage';
+import ContactUs from './pages/ContactUs';
+import AboutUs from './pages/AboutUs';
+import Messagesent from './pages/Messagesent';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const App = () => {
@@ -32,7 +35,9 @@ const App = () => {
           <Route path="/donors" element={<DonorsPage />} />
           <Route path="/requesters" element={<RequestersPage />} />
           <Route path="/profile" element={<ProfilePage />} />
-          
+          <Route path="/contact" element={<ContactUs />} />
+          <Route path="/about" element={<AboutUs />} />
+          <Route path="/message-sent" element={<Messagesent />} />
         </Routes>
       </div>
     </Router>

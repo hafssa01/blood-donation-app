@@ -1,13 +1,19 @@
 # Blood Donation Web App
 
 ## Project Overview  
-This is a web application designed to connect blood donors with recipients in need. It allows users to register as donors, request blood, and search for donors by location and blood type. The platform aims to make blood donation easier and more accessible.  
+This is a web application designed to connect blood donors with recipients in need. It allows users to fill forms as donors or recipientss, 
+and search for donors or recipients by location and blood type. The platform aims to make blood donation easier and more accessible.  
 
 ## Features  
-- **User Authentication**: Login and sign-up with Google OAuth.  
-- **Donor Registration**: Register as a blood donor with location and blood type details.  
-- **Search Functionality**: Find donors based on location and blood type.  
-- **Request Blood**: Submit requests for specific blood types.  
+- **User Registration**: Register with personal details.
+- **User Authentication**: Login.  
+- **Donate Blood**: Submit donates for specific blood types.
+- **Request Blood**: Submit requests for specific blood types.
+- **Blood donations list with filter**: View all and find donors
+  based on location and blood type.
+- **Blood requests list with filter**: View all and find requesters
+  based on location and blood type.
+- **User profile**: View self informations with the ability of updating.
 - **Responsive Design**: User-friendly UI built with React and Bootstrap.  
 
 ## Tech Stack  
@@ -16,18 +22,20 @@ This is a web application designed to connect blood donors with recipients in ne
 - **Database**: MongoDB  
 - **Version Control**: Git and GitHub  
 
-## Project Structure  
-```plaintext
+## Project Structure
 blood-donation-app/
+
 ├── backend/         # Flask application and API
+
 ├── frontend/        # React application
+
 ├── db/              # Database scripts or setup
+
 └── README.md        # Project documentation
 
 ## Deployment
-- Nginx for hosting the backend and frontend.
-- Deploy the app using services like AWS, Heroku, or PythonAnywhere.
-- Set up a domain name and SSL certificate.
+- Render for hosting the backend.
+- Vercel for fosting the frontend.
 
 ## Contributors
 - **Hafssa & Chaimaa:**

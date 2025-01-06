@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Form, Button, Toast, ToastContainer, Col, Row, Card, Container } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import NavigationBar from "./NavBar";
 import Footer from "./Footer";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -74,11 +74,13 @@ const RegisterForm = () => {
       } catch (error) {
         setToastMessage(error.response?.data?.error || "An error occurred during registration.");
         setShowToast(true);
+        setLoading(false);
       }
     } else {
       setErrors(newErrors);
       setToastMessage("Please fix the errors in the form.");
       setShowToast(true);
+      setLoading(false);
     }
   };
 
@@ -207,22 +209,35 @@ const RegisterForm = () => {
               />
               <Form.Text className="text-danger">{errors.confirmPassword}</Form.Text>
             </Form.Group>
-            <Button className="mt-4 w-100" disabled={loading} variant="danger" type="submit">
-            {loading ? (
-          <>
-            <span 
-              className="spinner-border spinner-border-sm me-2" 
-              role="status" 
-              aria-hidden="true">
-            </span>
-            Please wait...
-          </>
-        ) : (
-          'Register'
-        )}
-          
+            <Button
+              className="mt-4 w-100"
+              disabled={loading}
+              variant="danger"
+              type="submit"
+              style={{
+                backgroundColor: "#ff2c2c",
+                borderRadius: "20px",
+                color: "white",
+                border: "none",
+              }}
+            >
+              {loading ? (
+                <>
+                  <span
+                    className="spinner-border spinner-border-sm me-2"
+                    role="status"
+                    aria-hidden="true"
+                  ></span>
+                  Please wait...
+                </>
+              ) : (
+                "Register"
+              )}
             </Button>
           </Form>
+          <div className="text-center mt-3">
+            <p>Already have an account? <Link to="/login" style={{ color: '#ff2c2c' }}>Log in</Link></p>
+          </div>
         </Card>
 
         <ToastContainer position="top-end" className="p-3">

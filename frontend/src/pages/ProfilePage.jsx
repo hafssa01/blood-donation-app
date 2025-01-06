@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import NavigationBar from '../components/NavBar';
 import Footer from '../components/Footer';
-import ProfileCard from '../components/ProfileCard'; // Import the card component
+//import ProfileCard from '../components/ProfileCard'; // Import the card component
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -76,13 +76,7 @@ const ProfilePage = () => {
               <FaUserCircle size={150} color="#ff2c2c" className="mb-4" />
               {successMessage && <p className="text-success text-center">{successMessage}</p>}
               
-              {/* Profile Card */}
-              <div className="mb-4 d-flex justify-content-center">
-                <div className="col-md-6 mx-auto">
-                  <ProfileCard user={profileData} />
-                </div>
-              </div>
-                
+           
               {/* Profile Details Form */}
               <form
                 onSubmit={handleUpdateProfile}

@@ -23,9 +23,13 @@ This is a web application designed to connect blood donors with recipients in ne
 
 ## Project Structure
 blood-donation-app/
+
 ├── backend/         # Flask application and API
+
 ├── frontend/        # React application
+
 ├── db/              # Database scripts or setup
+
 └── README.md        # Project documentation
 
 ## Deployment

@@ -15,32 +15,34 @@ import ContactUs from './pages/ContactUs';
 import AboutUs from './pages/AboutUs';
 import Messagesent from './pages/Messagesent';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { AuthProvider } from './context/AuthContext';
 
 const App = () => {
   return (
-    <Router>
-      <div className="App">
-        
+    <AuthProvider>
+      <Router>
+        <div className="App">
 
-        {/* Routes for Different Pages */}
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<LoginForm />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/donate" element={<DonateBloodForm />} />
-          <Route path="/request" element={<RequestBloodForm />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/thank-you" element={<ThankYou />} />
-          <Route path="/sent-request" element={<RequestSent/>} />
-          <Route path="/donors" element={<DonorsPage />} />
-          <Route path="/requesters" element={<RequestersPage />} />
-          <Route path="/profile" element={<ProfilePage />} />
-          <Route path="/contact" element={<ContactUs />} />
-          <Route path="/about" element={<AboutUs />} />
-          <Route path="/message-sent" element={<Messagesent />} />
-        </Routes>
-      </div>
-    </Router>
+          {/* Routes for Different Pages */}
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/login" element={<LoginForm />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/donate" element={<DonateBloodForm />} />
+            <Route path="/request" element={<RequestBloodForm />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/thank-you" element={<ThankYou />} />
+            <Route path="/sent-request" element={<RequestSent/>} />
+            <Route path="/donors" element={<DonorsPage />} />
+            <Route path="/requesters" element={<RequestersPage />} />
+            <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/contact" element={<ContactUs />} />
+            <Route path="/about" element={<AboutUs />} />
+            <Route path="/message-sent" element={<Messagesent />} />
+          </Routes>
+        </div>
+      </Router>
+    </AuthProvider>
   );
 };
 

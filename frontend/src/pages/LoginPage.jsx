@@ -1,74 +1,68 @@
 import React, { useState } from "react";
 import { Form, Button, Toast, ToastContainer, Card } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 import NavigationBar from "../components/NavBar";
 import axios from "axios";
 import Footer from "../components/Footer";
 
 const LoginForm = () => {
+  const { login } = useAuth();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
-
   const [errors, setErrors] = useState({});
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
-
-  const navigate = useNavigate(); // React Router's navigation hook
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-
-    // Update errors in real-time
-    const newErrors = validate({ ...formData, [name]: value });
-    setErrors(newErrors);
+    setFormData(prev => ({ ...prev, [name]: value }));
+    setErrors(validate({ ...formData, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
-
     const newErrors = validate(formData);
     if (Object.keys(newErrors).length === 0) {
       try {
-        const response = await axios.post(`${import.meta.env.VITE_BACKEND_API_URL}/login`, formData, {
-          headers: { "Content-Type": "application/json" },
-        });
+        const response = await axios.post(
+          `${import.meta.env.VITE_BACKEND_API_URL}/login`, 
+          formData,
+          { headers: { "Content-Type": "application/json" } }
+        );
 
-        // Store the JWT token in localStorage
-        const { access_token } = response.data; // Adjust based on your response structure
-        localStorage.setItem('token', access_token);
-        
-        setToastMessage(response.data.message || "Login successful!");
+        const { access_token, user } = response.data;
+        login(user, access_token); // Use auth context login
+
+        setToastMessage("Login successful!");
         setShowToast(true);
-        setLoading(false);
-        // Navigate to the dashboard after a short delay
-        setTimeout(() => {
-          navigate("/dashboard"); // Adjust the route to match your dashboard path
-        }, 1000);
+        setTimeout(() => navigate("/dashboard"), 1000);
       } catch (error) {
-        setToastMessage(error.response?.data?.error || "An error occurred during login.");
+        setToastMessage(error.response?.data?.error || "Login failed");
         setShowToast(true);
+      } finally {
+        setLoading(false);
       }
     } else {
       setErrors(newErrors);
+      setLoading(false);
     }
   };
 
-  const validate = (data) => {
-    const newErrors = {};
-    if (!data.email) newErrors.email = 'Email is required';
-    if (!data.password) newErrors.password = 'Password is required';
-    return newErrors;
-  };
+  const validate = (data) => ({
+    ...(data.email ? {} : { email: 'Email is required' }),
+    ...(data.password ? {} : { password: 'Password is required' })
+  });
 
   return (
     <>
-      <NavigationBar /> 
+      <NavigationBar />
       <div className="d-flex justify-content-center align-items-center min-vh-100">
         <Card className="p-5 w-100" style={{ maxWidth: '600px', borderRadius: '15px' }}>
           <h2 className="text-center mb-4">Login</h2>
@@ -114,18 +108,11 @@ const LoginForm = () => {
               }}
             >
               {loading ? (
-          <>
-            <span 
-              className="spinner-border spinner-border-sm me-2" 
-              role="status" 
-              aria-hidden="true">
-            </span>
-            Please wait...
-          </>
-        ) : (
-          'Login'
-        )}
-              
+                <>
+                  <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true" />
+                  Please wait...
+                </>
+              ) : 'Login'}
             </Button>
 
             <p className="text-center mt-3">
@@ -148,9 +135,9 @@ const LoginForm = () => {
           </Toast>
         </ToastContainer>
       </div>
-      <Footer/>
+      <Footer />
     </>
   );
 };
 
-export default LoginForm
+export default LoginForm;

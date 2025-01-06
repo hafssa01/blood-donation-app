@@ -15,10 +15,10 @@ const AboutUs = () => {
           <Col md={6} className="mb-4">
             <Card
               className="shadow-sm border-2 rounded-2xl transition-transform duration-300 hover:-translate-y-2 animate__animated animate__fadeIn"
-              style={{ transition: 'all 0.3s ease', height: '100%', borderColor: '#ff2c2c' }}
+              style={{ transition: 'all 0.3s ease', height: '100%', borderColor: '#E9EAEC' }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = '#ff2c2c';
-                e.currentTarget.style.color = 'white';
+                e.currentTarget.style.backgroundColor = '#E9EAEC';
+                e.currentTarget.style.color = 'black';
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.backgroundColor = 'white';
@@ -36,10 +36,10 @@ const AboutUs = () => {
           <Col md={6} className="mb-4">
             <Card
               className="shadow-sm border-2 rounded-2xl transition-transform duration-300 hover:-translate-y-2 animate__animated animate__fadeIn"
-              style={{ transition: 'all 0.3s ease', height: '100%', borderColor: '#ff2c2c' }}
+              style={{ transition: 'all 0.3s ease', height: '100%', borderColor: '#E9EAEC' }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = '#ff2c2c';
-                e.currentTarget.style.color = 'white';
+                e.currentTarget.style.backgroundColor = '#E9EAEC';
+                e.currentTarget.style.color = 'black';
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.backgroundColor = 'white';

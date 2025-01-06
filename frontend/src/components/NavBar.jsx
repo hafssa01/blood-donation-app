@@ -1,162 +1,91 @@
 import React from 'react';
-import { User, LogIn, LogOut, Heart, UserPlus, Share2 } from 'lucide-react';  // Add necessary icons
+import { User, LogIn, LogOut, Heart } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import logo from '../assets/logo.png';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-import logo from '../assets/logo.png';  // Adjust path if necessary
 
-const NavigationBar = ({ isLoggedIn, onLogout }) => {
-  // Inline styles for the hover effect
-  const linkStyle = {
-    color: '#6c757d',  // Default color (gray)
-  };
+const NavigationBar = () => {
+  const { isAuthenticated, logout } = useAuth();
+  const navigate = useNavigate();
+  const linkStyle = { color: '#6c757d', fontWeight: 'bold', transition: 'transform 0.2s' };
+  const linkHoverStyle = { color: '#ff2c2c', transform: 'scale(1.1)' };
 
-  const linkHoverStyle = {
-    color: '#ff2c2c',  // Hover color (red)
+  const handleLogout = () => {
+    logout();
+    navigate('/');
   };
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-white shadow-sm top w-100 z-50 mb-9"> {/* Added mb-3 */}
+    <nav className="navbar navbar-expand-lg navbar-light bg-white shadow-sm top w-100 z-50 mb-9">
       <div className="container">
-        {/* Brand with Logo */}
-        <a className="navbar-brand text-black" href="/">
-          <img
-            src={logo}  // Source of the logo image
-            alt="Logo"
-            className="img-fluid"  // Makes the image responsive
-            style={{ maxHeight: '70px' }}  // Set maximum height to control the size
-          />
-        </a>
+        <Link className="navbar-brand text-black" to="/">
+          <img src={logo} alt="Logo" className="img-fluid" style={{ maxHeight: '70px' }} />
+        </Link>
 
-        {/* Toggle button for mobile */}
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
+        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>
         </button>
 
-        {/* Navbar Links */}
         <div className="collapse navbar-collapse mx-5" id="navbarNav">
-          <ul className="navbar-nav mx-auto"> {/* Centers the Home link */}
+          <ul className="navbar-nav mx-auto">
             <li className="nav-item mx-2">
-              <a
-                className="nav-link"
-                href="/"
-                style={linkStyle}
-                onMouseEnter={(e) => e.target.style.color = linkHoverStyle.color}
-                onMouseLeave={(e) => e.target.style.color = linkStyle.color}
-              >
+              <Link className="nav-link" to="/" style={linkStyle} onMouseEnter={(e) => e.target.style.color = linkHoverStyle.color} onMouseLeave={(e) => e.target.style.color = linkStyle.color} onMouseOver={(e) => e.target.style.transform = linkHoverStyle.transform} onMouseOut={(e) => e.target.style.transform = 'scale(1)'}>
                 Home
-              </a>
+              </Link>
             </li>
             <li className="nav-item mx-2">
-              <a
-                className="nav-link"
-                href="/about"
-                style={linkStyle}
-                onMouseEnter={(e) => e.target.style.color = linkHoverStyle.color}
-                onMouseLeave={(e) => e.target.style.color = linkStyle.color}
-              >
+              <Link className="nav-link" to="/about" style={linkStyle} onMouseEnter={(e) => e.target.style.color = linkHoverStyle.color} onMouseLeave={(e) => e.target.style.color = linkStyle.color} onMouseOver={(e) => e.target.style.transform = linkHoverStyle.transform} onMouseOut={(e) => e.target.style.transform = 'scale(1)'}>
                 About Us
-              </a>
+              </Link>
             </li>
             <li className="nav-item mx-2">
-              <a
-                className="nav-link"
-                href="/contact"
-                style={linkStyle}
-                onMouseEnter={(e) => e.target.style.color = linkHoverStyle.color}
-                onMouseLeave={(e) => e.target.style.color = linkStyle.color}
-              >
-                Cantact Us
-              </a>
+              <Link className="nav-link" to="/contact" style={linkStyle} onMouseEnter={(e) => e.target.style.color = linkHoverStyle.color} onMouseLeave={(e) => e.target.style.color = linkStyle.color} onMouseOver={(e) => e.target.style.transform = linkHoverStyle.transform} onMouseOut={(e) => e.target.style.transform = 'scale(1)'}>
+                Contact Us
+              </Link>
             </li>
           </ul>
 
-          {/* If logged in, show additional buttons */}
-          {isLoggedIn ? (
-            <ul className="navbar-nav ms-auto"> {/* Align buttons to the right */}
-              <li className="nav-item mx-2">
-                <a
-                  className="nav-link d-flex align-items-center gap-2"
-                  href="/profile"
-                  style={linkStyle}
-                  onMouseEnter={(e) => e.target.style.color = linkHoverStyle.color}
-                  onMouseLeave={(e) => e.target.style.color = linkStyle.color}
-                >
-                  <User size={20} />
-                  Profile
-                </a>
-              </li>
-              <li className="nav-item">
-                <a
-                  className="nav-link d-flex align-items-center gap-2"
-                  href="/donate"
-                  style={linkStyle}
-                  onMouseEnter={(e) => e.target.style.color = linkHoverStyle.color}
-                  onMouseLeave={(e) => e.target.style.color = linkStyle.color}
-                >
-                  <Heart size={20} />
-                  Donate Blood
-                </a>
-              </li>
-              <li className="nav-item mx-2">
-                <a
-                  className="nav-link d-flex align-items-center gap-2"
-                  href="/request"
-                  style={linkStyle}
-                  onMouseEnter={(e) => e.target.style.color = linkHoverStyle.color}
-                  onMouseLeave={(e) => e.target.style.color = linkStyle.color}
-                >
-                  <Heart size={20} />
-                  Request Blood
-                </a>
-              </li>
-              <li className="nav-item mx-2">
-                <button
-                  className="nav-link btn btn-link d-flex align-items-center gap-2 "
-                  style={linkStyle}
-                  onClick={onLogout}
-                >
-                  <LogOut size={20} />
-                  Logout
-                </button>
-              </li>
-            </ul>
-          ) : (
-            // If not logged in, show login/register options
-            <ul className="navbar-nav ms-auto"> {/* Align Login and Register to the right */}
-              <li className="nav-item">
-                <a
-                  className="nav-link d-flex align-items-center gap-2"
-                  href="/login"
-                  style={linkStyle}
-                  onMouseEnter={(e) => e.target.style.color = linkHoverStyle.color}
-                  onMouseLeave={(e) => e.target.style.color = linkStyle.color}
-                >
-                  <User size={20} />
-                  Login
-                </a>
-              </li>
-              <li className="nav-item">
-                <a
-                  className="nav-link d-flex align-items-center gap-2"
-                  href="/register"
-                  style={linkStyle}
-                  onMouseEnter={(e) => e.target.style.color = linkHoverStyle.color}
-                  onMouseLeave={(e) => e.target.style.color = linkStyle.color}
-                >
-                  <LogIn size={20} />
-                  Register
-                </a>
-              </li>
-            </ul>
-          )}
+          <ul className="navbar-nav ms-auto">
+            {isAuthenticated ? (
+              <>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/donate" style={{ color: '#6c757d' }} onMouseEnter={(e) => e.target.style.color = '#ff2c2c'} onMouseLeave={(e) => e.target.style.color = '#6c757d'}>
+                    <Heart size={20} /> Donate Blood
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/request" style={{ color: '#6c757d' }} onMouseEnter={(e) => e.target.style.color = '#ff2c2c'} onMouseLeave={(e) => e.target.style.color = '#6c757d'}>
+                    <Heart size={20} /> Request Blood
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/profile" style={{ color: '#6c757d' }} onMouseEnter={(e) => e.target.style.color = '#ff2c2c'} onMouseLeave={(e) => e.target.style.color = '#6c757d'}>
+                    <User size={20} /> Profile
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <button className="nav-link btn btn-link" onClick={handleLogout} style={{ color: '#6c757d' }} onMouseEnter={(e) => e.target.style.color = '#ff2c2c'} onMouseLeave={(e) => e.target.style.color = '#6c757d'}>
+                    <LogOut size={20} /> Logout
+                  </button>
+                </li>
+              </>
+            ) : (
+              <>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/login" style={{ color: '#6c757d' }} onMouseEnter={(e) => e.target.style.color = '#ff2c2c'} onMouseLeave={(e) => e.target.style.color = '#6c757d'}>
+                    <LogIn size={20} /> Login
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/register" style={{ color: '#6c757d' }} onMouseEnter={(e) => e.target.style.color = '#ff2c2c'} onMouseLeave={(e) => e.target.style.color = '#6c757d'}>
+                    <User size={20} /> Register
+                  </Link>
+                </li>
+              </>
+            )}
+          </ul>
         </div>
       </div>
     </nav>

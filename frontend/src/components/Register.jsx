@@ -216,7 +216,7 @@ const RegisterForm = () => {
               type="submit"
               style={{
                 backgroundColor: "#ff2c2c",
-                borderRadius: "20px",
+                borderRadius: "60px",
                 color: "white",
                 border: "none",
               }}

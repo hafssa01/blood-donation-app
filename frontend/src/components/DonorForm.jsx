@@ -245,7 +245,7 @@ const DonateBloodForm = () => {
         className="btn  w-45"
         onClick={() => navigate("/dashboard")}
         style={{ marginTop: "20px",
-           backgroundColor: 'white', borderColor: "red",
+           backgroundColor: 'white', borderColor: "red", borderRadius: "60px",
             color:'red' 
           }}
       >

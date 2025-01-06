@@ -4,6 +4,7 @@ import NavigationBar from '../components/NavBar';
 import banner from '../assets/banner.png';
 import img2 from '../assets/img2.png'
 import Footer from '../components/Footer';
+import BloodDonationProcess from '../components/BloodDonationProcess';
 
 const HomePage = () => {
   return (
@@ -39,7 +40,10 @@ const HomePage = () => {
               className="img-fluid"
             />
           </div>
+
         </div>
+        <BloodDonationProcess />
+  
       </div>
 
       {/* Full-width Footer */}

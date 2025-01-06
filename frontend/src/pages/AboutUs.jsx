@@ -1,6 +1,7 @@
 import React from 'react';
 import { Container, Row, Col, Card } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { Link } from "react-router-dom";
 import 'animate.css'; // Import Animate.css for animations
 import NavigationBar from '../components/NavBar';
 import Footer from '../components/Footer';
@@ -60,7 +61,7 @@ const AboutUs = () => {
             <h2 className="display-4">Our Vision</h2>
             <div className="underline mx-auto mb-4" style={{ width: '50px', height: '4px', backgroundColor: '#ff2c2c' }}></div>
             <p className="text-lg text-gray-700">
-              Our goal is to bridge the gap between blood donors and those in need, helping save lives while addressing the challenges and high costs associated with blood donation.
+              Our goal is to bridge the gap between blood donors and those in need, helping save lives while addressing the challenges and high costs associated with blood transfusion.
             </p>
           </Col>
         </Row>
@@ -69,7 +70,13 @@ const AboutUs = () => {
             <h2 className="display-4">How It Works</h2>
             <div className="underline mx-auto mb-4" style={{ width: '50px', height: '4px', backgroundColor: '#ff2c2c' }}></div>
             <p className="text-lg text-gray-700">
-              This app eliminates the distance between blood donors and recipients by connecting them based on their location and blood type. Signing up is easy—just fill out a simple form to access a curated list with all the information you need. Join us and become part of Blood Connect!
+              This app eliminates the distance between blood donors and recipients by connecting them based on their location and blood type. 
+              <strong>
+            <Link to="/register" style={{ color: 'inherit', textDecoration: 'none' }} onMouseEnter={(e) => e.target.style.color = '#ff2c2c'} onMouseLeave={(e) => e.target.style.color = 'inherit'}>
+            &nbsp;Signing up&nbsp;
+            </Link>
+          </strong> 
+                is easy—just fill out a simple form to access a curated list with all the information you need. Join us and become part of Blood Connect!
             </p>
           </Col>
         </Row>

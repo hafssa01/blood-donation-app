@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Form, Button, Toast, ToastContainer, Col, Row, Card, Container } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import NavigationBar from "./NavBar";
 import Footer from "./Footer";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -216,7 +216,7 @@ const RegisterForm = () => {
               type="submit"
               style={{
                 backgroundColor: "#ff2c2c",
-                borderRadius: "60px",
+                borderRadius: "20px",
                 color: "white",
                 border: "none",
               }}
@@ -235,6 +235,9 @@ const RegisterForm = () => {
               )}
             </Button>
           </Form>
+          <div className="text-center mt-3">
+            <p>Already have an account? <Link to="/login" style={{ color: '#ff2c2c' }}>Log in</Link></p>
+          </div>
         </Card>
 
         <ToastContainer position="top-end" className="p-3">

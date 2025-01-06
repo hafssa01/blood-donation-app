@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Form, Button, Toast, ToastContainer, Card } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link} from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import NavigationBar from "../components/NavBar";
 import axios from "axios";
@@ -115,10 +115,11 @@ const LoginForm = () => {
               ) : 'Login'}
             </Button>
 
-            <p className="text-center mt-3">
-              Don't have an account? <a href="/register" className="text-primary">Register</a>
-            </p>
           </Form>
+          <div className="text-center mt-3">
+            <p>Don't have an account? <Link to="/register" style={{ color: '#ff2c2c' }}>Register</Link></p>
+          </div>
+
         </Card>
 
         <ToastContainer position="top-end" className="p-3">

@@ -43,12 +43,16 @@ const ProfilePage = () => {
     setError('');
     setSuccessMessage('');
     try {
-      await axios.put(`${import.meta.env.VITE_BACKEND_API_URL}/profile`, profileData, {
+      const response = await axios.put(`${import.meta.env.VITE_BACKEND_API_URL}/profile`, profileData, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
       });
       setSuccessMessage('Profile updated successfully!');
     } catch (err) {
-      setError('Error updating profile. Please try again.');
+      if (err.response && err.response.data) {
+        setError(`Error updating profile: ${err.response.data.message}`);
+      } else {
+        setError('Error updating profile. Please try again.');
+      }
     } finally {
       setLoading(false);
     }
@@ -82,7 +86,7 @@ const ProfilePage = () => {
                 onSubmit={handleUpdateProfile}
                 className="mx-auto p-4"
                 style={{
-                  maxWidth: '500px',
+                  maxWidth: '600px',
                   border: '1px solid #ccc',
                   borderRadius: '8px',
                   backgroundColor: '#f9f9f9',

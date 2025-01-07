@@ -25,12 +25,25 @@ const ProfilePage = () => {
     setLoading(true);
     setError('');
     try {
+      const token = localStorage.getItem('token'); // Ensure this is correctly fetched
+      if (!token) {
+        throw new Error('No token found. Please log in again.');
+      }
+  
       const response = await axios.get(`${import.meta.env.VITE_BACKEND_API_URL}/profile`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+        headers: { Authorization: `Bearer ${token}` },
       });
+  
       setProfileData(response.data);
     } catch (err) {
-      setError('Error fetching profile data. Please log in again.');
+      // Handle 422 errors specifically
+      if (err.response && err.response.status === 422) {
+        setError('Invalid or expired token. Please log in again.');
+      } else if (err.response && err.response.status === 401) {
+        setError('Unauthorized. Please log in again.');
+      } else {
+        setError('Error fetching profile data. Please try again.');
+      }
     } finally {
       setLoading(false);
     }

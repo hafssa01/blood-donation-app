@@ -6,6 +6,7 @@ import os
 import bcrypt
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager,jwt_required, get_jwt_identity,create_access_token
+from datetime import timedelta
 
 app = Flask(__name__)
 load_dotenv() 
@@ -69,7 +70,7 @@ def login():
     
 
     # Create a new access token
-    access_token = create_access_token(identity=user['email'], expires_delta=False)  # Use email as the identity
+    access_token = create_access_token(identity=user['email'], expires_delta=timedelta(hours=1))  # Use email as the identity
     return jsonify({"access_token": access_token}), 200  # Return the token in the response
 
     

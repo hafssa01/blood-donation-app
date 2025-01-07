@@ -25,25 +25,12 @@ const ProfilePage = () => {
     setLoading(true);
     setError('');
     try {
-      const token = localStorage.getItem('token'); // Ensure this is correctly fetched
-      if (!token) {
-        throw new Error('No token found. Please log in again.');
-      }
-  
       const response = await axios.get(`${import.meta.env.VITE_BACKEND_API_URL}/profile`, {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
       });
-  
       setProfileData(response.data);
     } catch (err) {
-      // Handle 422 errors specifically
-      if (err.response && err.response.status === 422) {
-        setError('Invalid or expired token. Please log in again.');
-      } else if (err.response && err.response.status === 401) {
-        setError('Unauthorized. Please log in again.');
-      } else {
-        setError('Error fetching profile data. Please try again.');
-      }
+      setError('Error fetching profile data. Please log in again.');
     } finally {
       setLoading(false);
     }
@@ -56,16 +43,12 @@ const ProfilePage = () => {
     setError('');
     setSuccessMessage('');
     try {
-      const response = await axios.put(`${import.meta.env.VITE_BACKEND_API_URL}/profile`, profileData, {
+      await axios.put(`${import.meta.env.VITE_BACKEND_API_URL}/profile`, profileData, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
       });
       setSuccessMessage('Profile updated successfully!');
     } catch (err) {
-      if (err.response && err.response.data) {
-        setError(`Error updating profile: ${err.response.data.message}`);
-      } else {
-        setError('Error updating profile. Please try again.');
-      }
+      setError('Error updating profile. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -99,7 +82,7 @@ const ProfilePage = () => {
                 onSubmit={handleUpdateProfile}
                 className="mx-auto p-4"
                 style={{
-                  maxWidth: '600px',
+                  maxWidth: '500px',
                   border: '1px solid #ccc',
                   borderRadius: '8px',
                   backgroundColor: '#f9f9f9',

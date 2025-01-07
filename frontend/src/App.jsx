@@ -38,7 +38,7 @@ const App = () => {
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/contact" element={<ContactUs />} />
             <Route path="/about" element={<AboutUs />} />
-            <Route path="/message-sent" element={<Messagesent />} />
+            <Route path="/messagesent" element={<Messagesent />} />
           </Routes>
         </div>
       </Router>

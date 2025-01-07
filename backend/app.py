@@ -6,11 +6,11 @@ import os
 import bcrypt
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager,jwt_required, get_jwt_identity,create_access_token
-from datetime import timedelta
+from flask_mail import Mail, Message
 
 app = Flask(__name__)
 load_dotenv() 
-CORS(app, origins=["http://localhost:5173", "https://blood-connect-mauve.vercel.app", "https://www.blood-connect.me"])
+CORS(app, origins=["http://localhost:5173", "https://blood-connect-mauve.vercel.app", "https://www.blood-connect.me", ])
 
 # JWT Configurations
 app.config['JWT_SECRET_KEY'] = os.environ.get('JWT_SECRET_KEY')
@@ -22,6 +22,16 @@ jwt = JWTManager(app)
 mongo_uri = os.environ.get("MONGO_URI")
 client = MongoClient(mongo_uri)
 db = client["blood_donation_db"] 
+
+# Email configuration
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USERNAME'] = os.environ.get('GMAIL_USERNAME')  # Your Gmail address
+app.config['MAIL_PASSWORD'] = os.environ.get('GMAIL_APP_PASSWORD')  # Your Gmail app password
+app.config['MAIL_DEFAULT_SENDER'] = os.environ.get('GMAIL_USERNAME')
+
+mail = Mail(app)
 
 # Home page
 @app.route('/home')
@@ -70,7 +80,7 @@ def login():
     
 
     # Create a new access token
-    access_token = create_access_token(identity=user['email'], expires_delta=timedelta(hours=1))  # Use email as the identity
+    access_token = create_access_token(identity=user['email'], expires_delta=False)  # Use email as the identity
     return jsonify({"access_token": access_token}), 200  # Return the token in the response
 
     
@@ -127,6 +137,36 @@ def profile():
         data = request.json
         db.users.update_one({"email": current_user}, {"$set": data})
         return jsonify({"message": "Profile updated successfully!"}), 200
+    
+# Send Email Endpoint
+@app.route('/contact', methods=['POST'])
+def contact():
+    try:
+        data = request.json
+        
+        # Create email message
+        msg = Message(
+            subject='New BloodConnect Contact Form Submission',
+            recipients=[os.environ.get('GMAIL_USERNAME')],  # Your Gmail address
+            body=f"""
+            New contact form submission:
+            
+            From: {data['firstName']} {data['lastName']}
+            Email: {data['email']}
+            Subject: {data['subject']}
+            """
+        )
+        
+        # Send email
+        mail.send(msg)
+        
+        # Store in database if needed
+        db.contacts.insert_one(data)
+        
+        return jsonify({"message": "Message sent successfully!"}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -4,8 +4,14 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { CheckCircle } from 'react-bootstrap-icons'; // Import the check icon from react-bootstrap-icons
 import NavigationBar from '../components/NavBar';
 import Footer from '../components/Footer';
+import { Button } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
+
 
 const Messagesent = () => {
+
+  const navigate = useNavigate();
+
   return (
     <div className="d-flex flex-column min-vh-100">
       <NavigationBar />
@@ -17,6 +23,19 @@ const Messagesent = () => {
             <p>Your message has been sent.</p>
           </Col>
         </Row>
+        <Button
+            variant="danger"
+            onClick={() => navigate("/dashboard")}
+            style={{
+              marginTop: "20px",
+              backgroundColor: "#ff2c2c",
+              borderRadius: "20px",
+              color: "white",
+              border: "none",
+            }}
+          >
+            Back to Dashboard
+          </Button>
       </Container>
       <Footer />
     </div>

@@ -15,6 +15,7 @@ const ContactUs = () => {
 
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -51,22 +52,43 @@ const ContactUs = () => {
     return newErrors;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const newErrors = validate();
+    
     if (Object.keys(newErrors).length === 0) {
-      // Handle form submission
-      console.log('Form submitted:', formData);
-      // Reset form
-      setFormData({
-        firstName: '',
-        lastName: '',
-        email: '',
-        subject: '',
-      });
-      setErrors({});
-      // Navigate to the messagesent page
-      navigate('/messagesent');
+      setIsSubmitting(true);
+      try {
+        // Replace with your backend API URL
+        const response = await fetch('http://localhost:5000/contact', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to send message');
+        }
+
+        // Reset form
+        setFormData({
+          firstName: '',
+          lastName: '',
+          email: '',
+          subject: '',
+        });
+        setErrors({});
+        setTouched({});
+        // Navigate to the messagesent page
+        navigate('/messagesent');
+      } catch (error) {
+        console.error('Error sending message:', error);
+        alert('Failed to send message. Please try again later.');
+      } finally {
+        setIsSubmitting(false);
+      }
     } else {
       setErrors(newErrors);
     }
@@ -147,6 +169,7 @@ const ContactUs = () => {
               <div className="text-center">
                 <Button
                   type="submit"
+                  disabled={isSubmitting}
                   style={{
                     backgroundColor: '#ff2c2c',
                     borderRadius: '20px',
@@ -154,7 +177,7 @@ const ContactUs = () => {
                     border: 'none',
                   }}
                 >
-                  Send
+                  {isSubmitting ? 'Sending...' : 'Send'}
                 </Button>
               </div>
             </Form>

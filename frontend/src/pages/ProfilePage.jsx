@@ -122,8 +122,10 @@ const ProfilePage = () => {
                     name="email"
                     className="form-control"
                     value={profileData.email}
+                    readOnly
                     onChange={(e) =>
                       setProfileData({ ...profileData, email: e.target.value })
+                    
                     }
                   />
                 </div>

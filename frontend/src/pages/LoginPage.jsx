@@ -39,7 +39,7 @@ const LoginForm = () => {
 
         const { access_token, user } = response.data;
         login(user, access_token); // Use auth context login
-
+        localStorage.setItem('token', access_token);
         setToastMessage("Login successful!");
         setShowToast(true);
         setTimeout(() => navigate("/dashboard"), 1000);

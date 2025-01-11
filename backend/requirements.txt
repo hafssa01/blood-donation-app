@@ -9,7 +9,7 @@ dnspython==2.7.0
 Flask==3.1.0
 Flask-Cors==5.0.0
 Flask-JWT-Extended==4.7.1
-google-auth==2.37.0
+Flask-Mail==0.10.0
 idna==3.10
 iniconfig==2.0.0
 itsdangerous==2.2.0

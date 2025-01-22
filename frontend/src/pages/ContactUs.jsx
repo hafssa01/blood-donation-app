@@ -3,7 +3,6 @@ import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import NavigationBar from '../components/NavBar';
-import Footer from '../components/Footer';
 
 const ContactUs = () => {
   const [formData, setFormData] = useState({
@@ -184,7 +183,6 @@ const ContactUs = () => {
           </Col>
         </Row>
       </Container>
-      <Footer />
     </>
   );
 };

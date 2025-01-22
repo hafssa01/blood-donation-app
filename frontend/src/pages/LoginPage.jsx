@@ -4,7 +4,6 @@ import { useNavigate, Link} from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import NavigationBar from "../components/NavBar";
 import axios from "axios";
-import Footer from "../components/Footer";
 
 const LoginForm = () => {
   const { login } = useAuth();
@@ -136,7 +135,6 @@ const LoginForm = () => {
           </Toast>
         </ToastContainer>
       </div>
-      <Footer />
     </>
   );
 };

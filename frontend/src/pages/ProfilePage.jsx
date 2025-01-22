@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import NavigationBar from '../components/NavBar';
-import Footer from '../components/Footer';
 import ProfileCard from '../components/ProfileCard'; // Import the card component
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
@@ -191,7 +190,6 @@ const ProfilePage = () => {
           </button>
         </div>
       </div>
-      <Footer />
     </>
   );
 };

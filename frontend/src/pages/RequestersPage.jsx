@@ -3,7 +3,6 @@ import NavigationBar from "../components/NavBar";
 import { Container, Row, Col, Card, ListGroup, Button, Form } from "react-bootstrap";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import Footer from "../components/Footer";
 
 const RequestersPage = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
@@ -119,7 +118,6 @@ const RequestersPage = () => {
           </Button>
         </div>
       </Container>
-      <Footer />
     </>
   );
 };

@@ -3,7 +3,6 @@ import axios from "axios";
 import { Form, Button, Toast, ToastContainer, Col, Row, Card, Container } from "react-bootstrap";
 import { useNavigate, Link } from "react-router-dom";
 import NavigationBar from "./NavBar";
-import Footer from "./Footer";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const RegisterForm = () => {
@@ -249,7 +248,6 @@ const RegisterForm = () => {
           </Toast>
         </ToastContainer>
       </Container>
-      <Footer />
     </>
   );
 };

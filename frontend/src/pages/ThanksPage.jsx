@@ -3,7 +3,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { HeartFill } from 'react-bootstrap-icons';
 import { Link } from 'react-router-dom';
 import NavigationBar from '../components/NavBar';
-import Footer from '../components/Footer';
 import { Button } from 'react-bootstrap';
 import { FaArrowRight } from 'react-icons/fa';
 
@@ -32,7 +31,6 @@ const ThankYou = () => {
           </Button>
         </div>
       </div>
-      <Footer />
     </>
   );
 };

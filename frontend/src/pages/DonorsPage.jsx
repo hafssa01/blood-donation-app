@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import NavigationBar from "../components/NavBar";
-import Footer from "../components/Footer";
 import { Container, Row, Col, Card, ListGroup, Button, Form } from "react-bootstrap";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -113,7 +112,6 @@ const DonorsPage = () => {
           </Button>
         </div>
       </Container>
-      <Footer />
     </>
   );
 };

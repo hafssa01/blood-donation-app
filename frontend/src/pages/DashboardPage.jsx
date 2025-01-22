@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Card, Button, ListGroup } from "react-bootstrap";
 import NavigationBar from "../components/NavBar";
-import Footer from "../components/Footer";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -151,8 +150,6 @@ const Dashboard = () => {
           </Col>
         </Row>
       </Container>
-
-      <Footer />
     </div>
   );
 };

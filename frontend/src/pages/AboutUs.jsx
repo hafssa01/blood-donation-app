@@ -4,7 +4,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link } from "react-router-dom";
 import 'animate.css'; // Import Animate.css for animations
 import NavigationBar from '../components/NavBar';
-import Footer from '../components/Footer';
 
 const AboutUs = () => {
   return (
@@ -82,7 +81,6 @@ const AboutUs = () => {
         </Row>
         <Row className="mb-5"></Row> {/* Added extra margin-bottom */}
       </Container>
-      <Footer />
     </>
   );
 };

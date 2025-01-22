@@ -3,7 +3,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import NavigationBar from '../components/NavBar';
 import banner from '../assets/banner.png';
 import img2 from '../assets/img2.png'
-import Footer from '../components/Footer';
 import BloodDonationProcess from '../components/BloodDonationProcess';
 
 const HomePage = () => {
@@ -45,9 +44,6 @@ const HomePage = () => {
         <BloodDonationProcess />
   
       </div>
-
-      {/* Full-width Footer */}
-      <Footer />
     </>
   );
 };

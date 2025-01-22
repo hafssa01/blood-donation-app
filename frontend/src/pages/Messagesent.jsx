@@ -3,7 +3,6 @@ import { Container, Row, Col } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { CheckCircle } from 'react-bootstrap-icons'; // Import the check icon from react-bootstrap-icons
 import NavigationBar from '../components/NavBar';
-import Footer from '../components/Footer';
 import { Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 
@@ -37,8 +36,7 @@ const Messagesent = () => {
             Back to Dashboard
           </Button>
       </Container>
-      <Footer />
-    </div>
+´    </div>
   );
 };
 

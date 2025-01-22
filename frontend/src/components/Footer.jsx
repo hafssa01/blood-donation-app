@@ -5,7 +5,7 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-dark text-white py-3 mt-5" style={{ width: '100vw' }}>
+    <footer className="bg-dark text-white py-3 mt-5 pt-5" style={{ width: '100%' }}>
       <div className="text-center">
         <p className="mb-1">&copy; {currentYear} BloodConnect by Chaimaa and Hafssa</p>
         <p className="mb-0" style={{ fontSize: '14px' }}>

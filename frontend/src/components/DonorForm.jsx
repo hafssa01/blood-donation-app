@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Form, Button, Toast, ToastContainer, Col, Row, Card } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import NavigationBar from "./NavBar";
-import Footer from "./Footer";
 import axios from "axios"; 
 
 const DonateBloodForm = () => {
@@ -252,7 +251,6 @@ const DonateBloodForm = () => {
         Back to Dashboard
       </button>
       </div>
-        <Footer />
         <ToastContainer position="top-center" className="mt-5">
           <Toast show={showToast} onClose={() => setShowToast(false)} delay={3000} autohide>
             <Toast.Body>{toastMessage}</Toast.Body>

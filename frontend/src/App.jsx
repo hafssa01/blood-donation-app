@@ -16,12 +16,13 @@ import AboutUs from './pages/AboutUs';
 import Messagesent from './pages/Messagesent';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { AuthProvider } from './context/AuthContext';
+import Footer from './components/Footer';
 
 const App = () => {
   return (
     <AuthProvider>
       <Router>
-        <div className="App">
+        <div className="App d-flex flex-column min-vh-100">
 
           {/* Routes for Different Pages */}
           <Routes>
@@ -40,6 +41,9 @@ const App = () => {
             <Route path="/about" element={<AboutUs />} />
             <Route path="/messagesent" element={<Messagesent />} />
           </Routes>
+
+          <Footer />
+
         </div>
       </Router>
     </AuthProvider>

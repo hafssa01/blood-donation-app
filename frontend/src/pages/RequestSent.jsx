@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { FaHeart, FaArrowRight } from "react-icons/fa";
 import { Spinner, Button } from "react-bootstrap";
 import NavigationBar from "../components/NavBar";
-import Footer from "../components/Footer";
 
 const RequestSent = () => {
   return (
@@ -28,7 +27,6 @@ const RequestSent = () => {
           </Button>
         </div>
       </div>
-      <Footer />
     </>
   );
 };

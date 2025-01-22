@@ -237,7 +237,7 @@ const RequestBloodForm = () => {
           </Form>
         </Card>
       </div>
-      <div className="d-flex justify-content-center">
+      <div className="d-flex justify-content-center mb-5">
       <button
         className="btn  w-45"
         onClick={() => navigate("/dashboard")}

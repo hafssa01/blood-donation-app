@@ -214,7 +214,7 @@ const DonateBloodForm = () => {
               <Button
                 type="submit"
                 disabled={loading}
-                className="w-100 mb-2"
+                className="w-100 mb-1"
                 style={{
                   backgroundColor: "#ff2c2c",
                   borderRadius: "60px",
@@ -239,7 +239,7 @@ const DonateBloodForm = () => {
             </Form>
           </Card>
         </div>
-        <div className="d-flex justify-content-center">
+        <div className="d-flex justify-content-center mb-5">
       <button
         className="btn  w-45"
         onClick={() => navigate("/dashboard")}

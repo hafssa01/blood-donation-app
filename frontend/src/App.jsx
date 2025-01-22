@@ -17,33 +17,36 @@ import Messagesent from './pages/Messagesent';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { AuthProvider } from './context/AuthContext';
 import Footer from './components/Footer';
+import ProtectedRoute from './components/ProtectedRoute';
 
 const App = () => {
   return (
     <AuthProvider>
       <Router>
-        <div className="App d-flex flex-column min-vh-100">
-
+        <div className="App App d-flex flex-column min-vh-100">
           {/* Routes for Different Pages */}
           <Routes>
+            {/* Unprotected routes */}
             <Route path="/" element={<HomePage />} />
+            <Route path="/about" element={<AboutUs />} />
             <Route path="/login" element={<LoginForm />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/donate" element={<DonateBloodForm />} />
-            <Route path="/request" element={<RequestBloodForm />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/thank-you" element={<ThankYou />} />
-            <Route path="/sent-request" element={<RequestSent/>} />
-            <Route path="/donors" element={<DonorsPage />} />
-            <Route path="/requesters" element={<RequestersPage />} />
-            <Route path="/profile" element={<ProfilePage />} />
             <Route path="/contact" element={<ContactUs />} />
-            <Route path="/about" element={<AboutUs />} />
             <Route path="/messagesent" element={<Messagesent />} />
+
+
+            {/* Protected routes */}
+            <Route path="/donate" element={<ProtectedRoute element={<DonateBloodForm />} />} />
+            <Route path="/request" element={<ProtectedRoute element={<RequestBloodForm />} />} />
+            <Route path="/dashboard" element={<ProtectedRoute element={<Dashboard />} />} />
+            <Route path="/profile" element={<ProtectedRoute element={<ProfilePage />} />} />
+            <Route path="/thank-you" element={<ProtectedRoute element={<ThankYou />} />} />
+            <Route path="/sent-request" element={<ProtectedRoute element={<RequestSent />} />} />
+            <Route path="/donors" element={<ProtectedRoute element={<DonorsPage />} />} />
+            <Route path="/requesters" element={<ProtectedRoute element={<RequestersPage />} />} />
           </Routes>
 
           <Footer />
-
         </div>
       </Router>
     </AuthProvider>

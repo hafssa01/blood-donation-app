@@ -86,7 +86,7 @@ const RegisterForm = () => {
   return (
     <>
       <NavigationBar />
-      <Container className="d-flex justify-content-center align-items-center mt-3" style={{ minHeight: "100vh" }}>
+      <Container className="d-flex justify-content-center align-items-center mt-3 mb-5" style={{ minHeight: "100vh" }}>
         <Card className="p-4" style={{ width: "100%", maxWidth: "600px" }}>
           <h2 className="text-center mb-4">Register</h2>
           <Form onSubmit={handleSubmit}>

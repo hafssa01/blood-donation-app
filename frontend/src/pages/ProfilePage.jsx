@@ -122,6 +122,7 @@ const ProfilePage = () => {
                 <div className="form-group mb-3 text-start">
                   <label htmlFor="email">Email</label>
                   <input
+                    readOnly
                     type="email"
                     id="email"
                     name="email"
